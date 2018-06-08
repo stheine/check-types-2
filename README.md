@@ -1,8 +1,9 @@
 # check-types.js
 
-[![Package status](https://img.shields.io/npm/v/check-types.svg?style=flat-square)](https://www.npmjs.com/package/check-types)
-[![Build status](https://img.shields.io/travis/philbooth/check-types.js.svg?style=flat-square)](https://travis-ci.org/philbooth/check-types.js)
-[![License](https://img.shields.io/github/license/philbooth/check-types.js.svg?style=flat-square)](https://opensource.org/licenses/MIT)
+[![Build status](https://gitlab.com/philbooth/check-types.js/badges/master/pipeline.svg)](https://gitlab.com/philbooth/check-types.js/pipelines)
+[![Package status](https://img.shields.io/npm/v/check-types.svg)](https://www.npmjs.com/package/check-types)
+[![Downloads](https://img.shields.io/npm/dm/check-types.svg)](https://www.npmjs.com/package/check-types)
+[![License](https://img.shields.io/npm/l/check-types.svg)](https://opensource.org/licenses/MIT)
 
 A little JavaScript library
 for asserting types
@@ -70,7 +71,7 @@ npm i check-types --save
 Or if you just want the git repo:
 
 ```
-git clone git@github.com:philbooth/check-types.js.git
+git clone git@gitlab.com:philbooth/check-types.js.git
 ```
 
 If you're into
@@ -803,7 +804,7 @@ open `test/check-types.html`.
 [MIT][license]
 
 [definitelytyped]: https://github.com/DefinitelyTyped/DefinitelyTyped
-[releases]: https://github.com/philbooth/check-types.js/releases
+[releases]: https://gitlab.com/philbooth/check-types.js/tags
 [history7]: HISTORY.md#70
 [history6]: HISTORY.md#60
 [history5]: HISTORY.md#50
@@ -817,6 +818,6 @@ open `test/check-types.html`.
 [mocha]: http://mochajs.org/
 [chai]: http://chaijs.com/
 [uglifyjs]: https://github.com/mishoo/UglifyJS
-[please-release-me]: https://github.com/philbooth/please-release-me
-[license]: https://github.com/philbooth/check-types.js/blob/master/COPYING
+[please-release-me]: https://gitlab.com/philbooth/please-release-me
+[license]: https://gitlab.com/philbooth/check-types.js/blob/master/COPYING
 
