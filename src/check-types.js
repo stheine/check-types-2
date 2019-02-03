@@ -448,7 +448,7 @@
    * Returns true if `data` is an empty array, false otherwise.
    */
   function emptyArray (data) {
-    return array(data) && data.length === 0;
+    return isArray(data) && data.length === 0;
   }
 
   /**
@@ -457,7 +457,7 @@
    * Returns true if `data` is a non-empty array, false otherwise.
    */
   function nonEmptyArray (data) {
-    return array(data) && greater(data.length, 0);
+    return isArray(data) && greater(data.length, 0);
   }
 
   /**
@@ -633,7 +633,7 @@
    *
    */
   function all (data) {
-    if (array(data)) {
+    if (isArray(data)) {
       return testArray(data, false);
     }
 
@@ -683,7 +683,7 @@
    *
    */
   function any (data) {
-    if (array(data)) {
+    if (isArray(data)) {
       return testArray(data, true);
     }
 
