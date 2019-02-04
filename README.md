@@ -807,7 +807,7 @@ open `test/check-types.html`.
 
 [definitelytyped]: https://github.com/DefinitelyTyped/DefinitelyTyped
 [releases]: https://gitlab.com/philbooth/check-types.js/tags
-[history7]: HISTORY.md#anchor-800
+[history8]: HISTORY.md#anchor-800
 [history7]: HISTORY.md#anchor-70
 [history6]: HISTORY.md#anchor-60
 [history5]: HISTORY.md#anchor-50
