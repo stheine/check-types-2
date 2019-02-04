@@ -5,7 +5,7 @@
   'use strict';
 
   var strings, messages, predicates, functions, assert, not, maybe,
-      collections, slice, neginf, posinf, isArray, haveSymbols;
+      collections, slice, neginf, posinf, isArray, keys, haveSymbols;
 
   strings = {
     v: 'value',
@@ -73,7 +73,6 @@
   });
 
   functions = {
-    apply: apply,
     map: map,
     all: all,
     any: any
@@ -84,6 +83,7 @@
   neginf = Number.NEGATIVE_INFINITY;
   posinf = Number.POSITIVE_INFINITY;
   isArray = Array.isArray;
+  keys = Object.keys;
   haveSymbols = typeof Symbol === 'function';
 
   functions = mixin(functions, predicates);
@@ -367,7 +367,7 @@
    * Returns true if `data` is an empty object, false otherwise.
    */
   function emptyObject (data) {
-    return object(data) && Object.keys(data).length === 0;
+    return object(data) && keys(data).length === 0;
   }
 
   /**
@@ -376,7 +376,7 @@
    * Returns true if `data` is a non-empty object, false otherwise.
    */
   function nonEmptyObject (data) {
-    return object(data) && Object.keys(data).length > 0;
+    return object(data) && keys(data).length > 0;
   }
 
   /**
@@ -489,7 +489,7 @@
    * Returns true if `data` contains `value`, false otherwise.
    */
   function includes (data, value) {
-    var iterator, iteration, keys, length, i;
+    var iterator, iteration, dataKeys, length, i;
 
     if (! assigned(data)) {
       return false;
@@ -509,10 +509,10 @@
       return false;
     }
 
-    keys = Object.keys(data);
-    length = keys.length;
+    dataKeys = keys(data);
+    length = dataKeys.length;
     for (i = 0; i < length; ++i) {
-      if (data[keys[i]] === value) {
+      if (data[dataKeys[i]] === value) {
         return true;
       }
     }
@@ -549,77 +549,58 @@
   }
 
   /**
-   * Public function `apply`.
-   *
-   * Maps each value from the `data` to the corresponding predicate and returns
-   * the result array. If the same function is to be applied across all of the
-   * data, a single predicate function may be passed in.
-   *
-   */
-  function apply (data, predicates) {
-    assert.array(data);
-
-    if (isFunction(predicates)) {
-      return data.map(function (value) {
-        return predicates(value);
-      });
-    }
-
-    assert.array(predicates);
-    assert.hasLength(data, predicates.length);
-
-    return data.map(function (value, index) {
-      return predicates[index](value);
-    });
-  }
-
-  /**
    * Public function `map`.
    *
-   * Maps each value from the `data` to the corresponding predicate and returns
-   * the result object. Supports nested objects. If the `data` is not nested and
-   * the same function is to be applied across all of it, a single predicate
-   * function may be passed in.
-   *
+   * Maps each value from `data` to the corresponding predicate and returns
+   * the results. If the same function is to be applied across all of the data,
+   * a single predicate function may be passed in.
    */
   function map (data, predicates) {
-    assert.object(data);
+    var result;
 
-    if (isFunction(predicates)) {
-      return mapSimple(data, predicates);
+    if (isArray(data)) {
+      result = [];
+    } else {
+      result = {};
     }
 
-    assert.object(predicates);
-
-    return mapComplex(data, predicates);
-  }
-
-  function mapSimple (data, predicate) {
-    var result = {};
-
-    Object.keys(data).forEach(function (key) {
-      result[key] = predicate(data[key]);
-    });
-
-    return result;
-  }
-
-  function mapComplex (data, predicates) {
-    var result = {};
-
-    Object.keys(predicates).forEach(function (key) {
-      var predicate = predicates[key];
-
-      if (isFunction(predicate)) {
-        if (not.assigned(data)) {
-          result[key] = !!predicate.m;
-        } else {
-          result[key] = predicate(data[key]);
-        }
-      } else if (object(predicate)) {
-        result[key] = mapComplex(data[key], predicate);
+    if (isFunction(predicates)) {
+      keys(data).forEach(function (key) {
+        result[key] = predicates(data[key]);
+      });
+    } else {
+      if (! isArray(predicates)) {
+        assert.object(predicates);
       }
-    });
+
+      var dataKeys = keys(data || {});
+
+      keys(predicates).forEach(function (key) {
+        dataKeys.some(function (dataKey, index) {
+          if (dataKey === key) {
+            dataKeys.splice(index, 1);
+            return true;
+          }
+          return false;
+        });
+
+        var predicate = predicates[key];
+
+        if (isFunction(predicate)) {
+          if (not.assigned(data)) {
+            result[key] = !!predicate.m;
+          } else {
+            result[key] = predicate(data[key]);
+          }
+        } else {
+          result[key] = map(data[key], predicate);
+        }
+      });
+
+      dataKeys.forEach(function (key) {
+        result[key] = false;
+      });
+    }
 
     return result;
   }
@@ -628,9 +609,7 @@
    * Public function `all`
    *
    * Check that all boolean values are true
-   * in an array (returned from `apply`)
-   * or object (returned from `map`).
-   *
+   * in an array or object returned from `map`.
    */
   function all (data) {
     if (isArray(data)) {
@@ -678,9 +657,7 @@
    * Public function `any`
    *
    * Check that at least one boolean value is true
-   * in an array (returned from `apply`)
-   * or object (returned from `map`).
-   *
+   * in an array or object returned from `map`.
    */
   function any (data) {
     if (isArray(data)) {
@@ -693,7 +670,7 @@
   }
 
   function mixin (target, source) {
-    Object.keys(source).forEach(function (key) {
+    keys(source).forEach(function (key) {
       target[key] = source[key];
     });
 
@@ -827,7 +804,7 @@
       case arrayLike:
         return slice.call(collection);
       case object:
-        return Object.keys(collection).map(function (key) {
+        return keys(collection).map(function (key) {
           return collection[key];
         });
       default:
@@ -848,7 +825,7 @@
 
     result = object || {};
 
-    Object.keys(functions).forEach(function (key) {
+    keys(functions).forEach(function (key) {
       Object.defineProperty(result, key, {
         configurable: false,
         enumerable: true,

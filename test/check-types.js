@@ -1009,108 +1009,94 @@
       assert.isFalse(check.function({}));
     });
 
-    test('apply function is defined', function () {
-      assert.isFunction(check.apply);
-    });
-
-    test('apply with non-array data throws', function () {
-      assert.throws(function () {
-        check.apply({}, []);
-      });
-    });
-
-    test('apply with non-array predicates throws', function () {
-      assert.throws(function () {
-        check.apply([], {});
-      });
-    });
-
-    test('apply with array data and predicates does not throw', function () {
-      assert.doesNotThrow(function () {
-        check.apply([], []);
-      });
-    });
-
-    test('apply with one predicate does not throw', function () {
-      assert.doesNotThrow(function () {
-        check.apply([ '', '', ''], check.string);
-      });
-    });
-
-    test('apply with insufficient data throws', function () {
-      assert.throws(function () {
-        check.apply([ '' ], [ check.string, check.string ]);
-      });
-    });
-
-    test('apply with insufficient predicates throws', function () {
-      assert.throws(function () {
-        check.apply([ '', '', '' ], [ check.string, check.string ]);
-      });
-    });
-
-    test('apply returns the correct results', function () {
-      var result =
-        check.apply(
-          [ '', 0, '', 0 ],
-          [ check.string, check.string, check.number, check.number ]
-        );
-      assert.lengthOf(result, 4);
-      assert.isTrue(result[0]);
-      assert.isFalse(result[1]);
-      assert.isFalse(result[2]);
-      assert.isTrue(result[3]);
-    });
-
-    test('apply with assertion does not throw with valid data', function () {
-      assert.doesNotThrow(function () {
-        check.apply([ 'foo' ], check.assert.string);
-      });
-    });
-
-    test('apply with assertion throws with invalid data', function () {
-      assert.throws(function () {
-        check.apply([ 'foo', 0 ], check.assert.string);
-      });
-    });
-
     test('map function is defined', function () {
       assert.isFunction(check.map);
     });
 
-    test('map with non-object data throws', function () {
-      assert.throws(function () {
-        check.map([], {});
+    test('map with arrays does not throw', function () {
+      assert.doesNotThrow(function () {
+        check.map([], []);
       });
     });
 
-    test('map with object data does not throw', function () {
+    test('map with objects does not throw', function () {
       assert.doesNotThrow(function () {
         check.map({}, {});
       });
     });
 
-    test('map returns the correct results', function () {
+    test('map with array and object does not throw', function () {
+      assert.doesNotThrow(function () {
+        check.map([], {});
+      });
+    });
+
+    test('map with object and array does not throw', function () {
+      assert.doesNotThrow(function () {
+        check.map({}, []);
+      });
+    });
+
+    test('map with one predicate does not throw', function () {
+      assert.doesNotThrow(function () {
+        check.map([ '', '', ''], check.string);
+      });
+    });
+
+    test('map with insufficient data does not throw', function () {
+      assert.doesNotThrow(function () {
+        check.map([ '' ], [ check.string, check.string ]);
+      });
+    });
+
+    test('map with insufficient predicates does not throw', function () {
+      assert.doesNotThrow(function () {
+        check.map([ '', '', '' ], [ check.string, check.string ]);
+      });
+    });
+
+    test('map with array returns the correct results', function () {
       var result =
         check.map(
-          { foo: '', bar: 0, baz: { qux: 0 } },
+          [ '', 0, '', 0, 0 ],
+          [ check.string, check.string, check.number, check.number ]
+        );
+      assert.lengthOf(result, 5);
+      assert.isTrue(result[0]);
+      assert.isFalse(result[1]);
+      assert.isFalse(result[2]);
+      assert.isTrue(result[3]);
+      assert.isFalse(result[4]);
+    });
+
+    test('map with object returns the correct results', function () {
+      var result =
+        check.map(
+          { foo: '', bar: 0, baz: { qux: 0, wibble: 'blee' } },
           { foo: check.string, bar: check.string, baz: { qux: check.number } }
         );
       assert.lengthOf(Object.keys(result), 3);
       assert.isTrue(result.foo);
       assert.isFalse(result.bar);
       assert.isObject(result.baz);
-      assert.lengthOf(Object.keys(result.baz), 1);
+      assert.lengthOf(Object.keys(result.baz), 2);
       assert.isTrue(result.baz.qux);
+      assert.isFalse(result.baz.wibble);
     });
 
     test('map with assertion does not throw with valid data', function () {
+      assert.doesNotThrow(function () {
+        check.map([ 'foo' ], check.assert.string);
+      });
       assert.doesNotThrow(function () {
         check.map({ foo: 'bar' }, { foo: check.assert.string });
       });
     });
 
     test('map with assertion throws with invalid data', function () {
+      assert.throws(function () {
+        check.map([ 'foo', 0 ], check.assert.string);
+      });
       assert.throws(function () {
         check.map({ foo: 'foo', bar: 0 }, check.assert.string);
       });
@@ -1277,7 +1263,6 @@
 
     test('assert modifier is not applied to batch operations', function () {
       assert.isUndefined(check.assert.map);
-      assert.strictEqual(check.assert.apply, Function.apply);
       assert.isUndefined(check.assert.all);
       assert.isUndefined(check.assert.any);
     });

@@ -58,7 +58,7 @@ abstracted by a simple API.
 
 ## How little is it?
 
-21 kb unminified with comments, 5.9 kb minified, 2.2 kb minified + gzipped.
+21 kb unminified with comments, 5.7 kb minified, 2.1 kb minified + gzipped.
 
 ## How do I install it?
 
@@ -197,11 +197,10 @@ in a number of different contexts:
   except it operates on an object's properties.
 
 Additionally, there are some batch operations
-that allow you to apply different predicates
+to help you apply predicates
 to each value
-in an array or object.
+of an array or object.
 These are implemented by
-`check.apply`,
 `check.map`,
 `check.any` and
 `check.all`.
@@ -518,38 +517,26 @@ These are implemented by
 
 #### Batch operations
 
-* `check.apply(things, predicates)`:
-  Applies each value from the `things` array
-  to the corresponding predicate
-  and returns the array of results.
-  Passing a single predicate
-  instead of an array
-  applies all of the values
-  to the same predicate.
-
 * `check.map(things, predicates)`:
-  Maps each value from the `things` object
+  Maps each value from the `things` array or object
   to the corresponding predicate
-  and returns an object
-  containing the results.
-  Supports nested objects.
+  and returns the array or object of results.
   Passing a single predicate
-  instead of an object
-  applies all of the values
-  to the same predicate,
-  ignoring nested objects.
+  instead of an array or object
+  maps all of the values
+  to the same predicate.
 
 * `check.all(results)`:
   Returns `true`
   if all the result values are true
-  in an array (returned from `apply`)
-  or object (returned from `map`).
+  in an array or object
+  returned by `map`.
 
-* `check.any(predicateResults)`:
+* `check.any(results)`:
   Returns `true`
   if any result value is true
-  in an array (returned from `apply`)
-  or object (returned from `map`).
+  in an array or object
+  returned by `map`.
 
 #### Some examples
 
@@ -589,7 +576,7 @@ check.assert(myFunction(), 'Something went wrong', CustomError);
 ```
 
 ```javascript
-check.apply([ 'foo', 'bar', '' ], check.nonEmptyString);
+check.map([ 'foo', 'bar', '' ], check.nonEmptyString);
 // Returns [ true, true, false ]
 ```
 
@@ -616,7 +603,7 @@ check.all(
 
 ```javascript
 check.any(
-    check.apply(
+    check.map(
         [ 1, 2, 3, '' ],
         check.string
     )
