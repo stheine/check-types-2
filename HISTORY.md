@@ -1,5 +1,15 @@
 # History
 
+## 8.0.1
+
+### Bug fixes
+
+* docs: fix link to change log (9166ecf)
+
+### Other changes
+
+* docs: update copyright (ddc00b8)
+
 ## 8.0.0
 
 ### Breaking changes
