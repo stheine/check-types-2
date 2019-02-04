@@ -792,13 +792,13 @@ open `test/check-types.html`.
 
 [definitelytyped]: https://github.com/DefinitelyTyped/DefinitelyTyped
 [releases]: https://gitlab.com/philbooth/check-types.js/tags
-[history7]: HISTORY.md#70
-[history6]: HISTORY.md#60
-[history5]: HISTORY.md#50
-[history4]: HISTORY.md#40
-[history3]: HISTORY.md#30
-[history2]: HISTORY.md#20
-[history1]: HISTORY.md#10
+[history7]: HISTORY.md#anchor-70
+[history6]: HISTORY.md#anchor-60
+[history5]: HISTORY.md#anchor-50
+[history4]: HISTORY.md#anchor-40
+[history3]: HISTORY.md#anchor-30
+[history2]: HISTORY.md#anchor-20
+[history1]: HISTORY.md#anchor-10
 [node]: http://nodejs.org/
 [npm]: https://npmjs.org/
 [jshint]: https://github.com/jshint/node-jshint
