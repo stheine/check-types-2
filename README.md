@@ -645,6 +645,21 @@ will adhere to that too.
 See the [releases]
 for more information.
 
+## What changed from 7.x to 8.x?
+
+Breaking changes
+were made to the API
+in version 8.0.0.
+
+Specifically,
+the `apply` batch operation was removed
+and `map` was instead changed
+to work with both arrays and objects,
+to simplify the API surface.
+
+See the [history][history8]
+for more details.
+
 ## What changed from 6.x to 7.x?
 
 Breaking changes
@@ -792,6 +807,7 @@ open `test/check-types.html`.
 
 [definitelytyped]: https://github.com/DefinitelyTyped/DefinitelyTyped
 [releases]: https://gitlab.com/philbooth/check-types.js/tags
+[history7]: HISTORY.md#anchor-800
 [history7]: HISTORY.md#anchor-70
 [history6]: HISTORY.md#anchor-60
 [history5]: HISTORY.md#anchor-50

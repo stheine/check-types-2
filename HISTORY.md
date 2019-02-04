@@ -1,5 +1,25 @@
 # History
 
+## 8.0.0
+
+### Breaking changes
+
+* api: remove apply and combine functionality with map (ecc40e5)
+
+### Bug fixes
+
+* docs: fix links to change log (ae3811a)
+
+### Refactorings
+
+* lib: eliminate intermediate arrays when iterating properties (8eeda6f)
+* lib: use native Array.isArray internally (ebc9ed0)
+
+### Other changes
+
+* deps: update dev dependencies and rebuild (854b012)
+* project: turn on gitlab pipeline (ab4f662)
+
 ## 7.4.0
 
 ### New features
