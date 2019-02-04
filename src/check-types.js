@@ -367,7 +367,21 @@
    * Returns true if `data` is an empty object, false otherwise.
    */
   function emptyObject (data) {
-    return object(data) && keys(data).length === 0;
+    return object(data) && !some(data, function () {
+      return true;
+    });
+  }
+
+  function some (data, predicate) {
+    for (var key in data) {
+      if (data.hasOwnProperty(key)) {
+        if (predicate(key, data[key])) {
+          return true;
+        }
+      }
+    }
+
+    return false;
   }
 
   /**
@@ -376,7 +390,9 @@
    * Returns true if `data` is a non-empty object, false otherwise.
    */
   function nonEmptyObject (data) {
-    return object(data) && keys(data).length > 0;
+    return object(data) && some(data, function () {
+      return true;
+    });
   }
 
   /**
@@ -457,7 +473,7 @@
    * Returns true if `data` is a non-empty array, false otherwise.
    */
   function nonEmptyArray (data) {
-    return isArray(data) && greater(data.length, 0);
+    return isArray(data) && data.length > 0;
   }
 
   /**
@@ -466,7 +482,7 @@
    * Returns true if `data` is an array-like object, false otherwise.
    */
   function arrayLike (data) {
-    return assigned(data) && greaterOrEqual(data.length, 0);
+    return assigned(data) && data.length >= 0;
   }
 
   /**
@@ -489,7 +505,7 @@
    * Returns true if `data` contains `value`, false otherwise.
    */
   function includes (data, value) {
-    var iterator, iteration, dataKeys, length, i;
+    var iterator, iteration;
 
     if (! assigned(data)) {
       return false;
@@ -509,15 +525,9 @@
       return false;
     }
 
-    dataKeys = keys(data);
-    length = dataKeys.length;
-    for (i = 0; i < length; ++i) {
-      if (data[dataKeys[i]] === value) {
-        return true;
-      }
-    }
-
-    return false;
+    return some(data, function (key, dataValue) {
+      return dataValue === value;
+    });
   }
 
   /**
@@ -565,8 +575,8 @@
     }
 
     if (isFunction(predicates)) {
-      keys(data).forEach(function (key) {
-        result[key] = predicates(data[key]);
+      forEach(data, function (key, value) {
+        result[key] = predicates(value);
       });
     } else {
       if (! isArray(predicates)) {
@@ -575,7 +585,7 @@
 
       var dataKeys = keys(data || {});
 
-      keys(predicates).forEach(function (key) {
+      forEach(predicates, function (key, predicate) {
         dataKeys.some(function (dataKey, index) {
           if (dataKey === key) {
             dataKeys.splice(index, 1);
@@ -583,8 +593,6 @@
           }
           return false;
         });
-
-        var predicate = predicates[key];
 
         if (isFunction(predicate)) {
           if (not.assigned(data)) {
@@ -603,6 +611,14 @@
     }
 
     return result;
+  }
+
+  function forEach (object, action) {
+    for (var key in object) {
+      if (object.hasOwnProperty(key)) {
+        action(key, object[key]);
+      }
+    }
   }
 
   /**
@@ -670,8 +686,8 @@
   }
 
   function mixin (target, source) {
-    keys(source).forEach(function (key) {
-      target[key] = source[key];
+    forEach(source, function (key, value) {
+      target[key] = value;
     });
 
     return target;
@@ -825,12 +841,12 @@
 
     result = object || {};
 
-    keys(functions).forEach(function (key) {
+    forEach(functions, function (key, fn) {
       Object.defineProperty(result, key, {
         configurable: false,
         enumerable: true,
         writable: false,
-        value: modifier.apply(null, args.concat(functions[key], messages[key]))
+        value: modifier.apply(null, args.concat(fn, messages[key]))
       });
     });
 
