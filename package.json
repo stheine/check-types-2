@@ -29,11 +29,11 @@
         "safety"
     ],
     "devDependencies": {
-        "jshint": "2.9.x",
-        "mocha": "5.2.x",
         "chai": "4.2.x",
-        "uglify-js": "3.4.x",
-        "please-release-me": "2.1.x"
+        "jshint": "^2.9.7",
+        "mocha": "5.2.x",
+        "please-release-me": "^2.1.2",
+        "uglify-js": "3.4.x"
     },
     "scripts": {
         "lint": "jshint ./src/check-types.js",
