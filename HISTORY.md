@@ -1,5 +1,18 @@
 # History
 
+## 8.0.2
+
+### Bug fixes
+
+* lib: ignore properties in map that have no predicate (f6bbad7)
+* docs: add missing section link to readme index (5cfec25)
+* ci: stop testing in node 0.10 (f986f1c)
+
+### Other changes
+
+* docs: update readme (e602bfd)
+* package: npm update (1b32cd4)
+
 ## 8.0.1
 
 ### Bug fixes
