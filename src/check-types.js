@@ -604,10 +604,6 @@
           result[key] = map(data[key], predicate);
         }
       });
-
-      //dataKeys.forEach(function (key) {
-      //  result[key] = false;
-      //});
     }
 
     return result;
