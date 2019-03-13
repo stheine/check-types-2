@@ -605,9 +605,9 @@
         }
       });
 
-      dataKeys.forEach(function (key) {
-        result[key] = false;
-      });
+      //dataKeys.forEach(function (key) {
+      //  result[key] = false;
+      //});
     }
 
     return result;

@@ -1061,12 +1061,11 @@
           [ '', 0, '', 0, 0 ],
           [ check.string, check.string, check.number, check.number ]
         );
-      assert.lengthOf(result, 5);
+      assert.lengthOf(result, 4);
       assert.isTrue(result[0]);
       assert.isFalse(result[1]);
       assert.isFalse(result[2]);
       assert.isTrue(result[3]);
-      assert.isFalse(result[4]);
     });
 
     test('map with object returns the correct results', function () {
@@ -1079,9 +1078,8 @@
       assert.isTrue(result.foo);
       assert.isFalse(result.bar);
       assert.isObject(result.baz);
-      assert.lengthOf(Object.keys(result.baz), 2);
+      assert.lengthOf(Object.keys(result.baz), 1);
       assert.isTrue(result.baz.qux);
-      assert.isFalse(result.baz.wibble);
     });
 
     test('map with assertion does not throw with valid data', function () {
