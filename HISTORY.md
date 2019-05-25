@@ -1,5 +1,16 @@
 # History
 
+## 8.0.3
+
+### Bug fixes
+
+* docs: remove stale link from readme (9f467b3)
+
+### Other changes
+
+* ci: turn off node 4/6 builds (301e09a)
+* lib: delete old commented-out code (2d11e0b)
+
 ## 8.0.2
 
 ### Bug fixes
