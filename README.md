@@ -22,7 +22,6 @@ and values.
         * [Object predicates](#object-predicates)
         * [Array predicates](#array-predicates)
         * [Date predicates](#date-predicates)
-        * [Error predicates](#error-predicates)
         * [Function predicates](#function-predicates)
         * [Modifiers](#modifiers)
         * [Batch operations](#batch-operations)
