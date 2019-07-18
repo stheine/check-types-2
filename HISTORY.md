@@ -1,5 +1,15 @@
 # History
 
+## 9.0.0
+
+### Breaking changes
+
+* lib: support a trim option on emptyString and nonEmptyString (75599d2)
+
+### Other changes
+
+* docs: update download counter (ee81d9c)
+
 ## 8.0.3
 
 ### Bug fixes
