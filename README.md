@@ -2,7 +2,7 @@
 
 [![Build status](https://gitlab.com/philbooth/check-types.js/badges/master/pipeline.svg)](https://gitlab.com/philbooth/check-types.js/pipelines)
 [![Package status](https://img.shields.io/npm/v/check-types.svg)](https://www.npmjs.com/package/check-types)
-[![Downloads](https://img.shields.io/npm/dm/check-types.svg)](https://www.npmjs.com/package/check-types)
+[![Downloads](https://img.shields.io/npm/dw/check-types.svg)](https://www.npmjs.com/package/check-types)
 [![License](https://img.shields.io/npm/l/check-types.svg)](https://opensource.org/licenses/MIT)
 
 A little JavaScript library
