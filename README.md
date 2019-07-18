@@ -58,7 +58,7 @@ abstracted by a simple API.
 
 ## How little is it?
 
-20 kb unminified with comments, 5.7 kb minified, 2.1 kb minified + gzipped.
+21 kb unminified with comments, 5.8 kb minified, 2.1 kb minified + gzipped.
 
 ## How do I install it?
 
@@ -248,15 +248,23 @@ These are implemented by
   if `thing` is a string,
   `false` otherwise.
 
-* `check.emptyString(thing)`:
+* `check.emptyString(thing, options)`:
   Returns `true`
   if `thing` is the empty string,
   `false` otherwise.
+  If `options.trim` is truthy
+  and `thing` is a string,
+  `thing.trim()` will be called
+  before making the comparison.
 
-* `check.nonEmptyString(thing)`:
+* `check.nonEmptyString(thing, options)`:
   Returns `true`
   if `thing` is a non-empty string,
   `false` otherwise.
+  If `options.trim` is truthy
+  and `thing` is a string,
+  `thing.trim()` will be called
+  before making the comparison.
 
 * `check.contains(thing, substring)`:
   Returns `true`
@@ -645,6 +653,23 @@ will adhere to that too.
 See the [releases]
 for more information.
 
+## What changed from 8.x to 9.x?
+
+Breaking changes
+were made to the API
+in version 9.0.0.
+
+Specifically,
+an `options` argument was added
+to the `emptyString` and `nonEmptyString` predicates.
+In each case,
+if `options.trim` is truthy,
+strings will be trimmed
+before making the comparison.
+
+See the [history][history9]
+for more details.
+
 ## What changed from 7.x to 8.x?
 
 Breaking changes
@@ -807,6 +832,7 @@ open `test/check-types.html`.
 
 [definitelytyped]: https://github.com/DefinitelyTyped/DefinitelyTyped
 [releases]: https://gitlab.com/philbooth/check-types.js/tags
+[history9]: HISTORY.md#anchor-900
 [history8]: HISTORY.md#anchor-800
 [history7]: HISTORY.md#anchor-70
 [history6]: HISTORY.md#anchor-60

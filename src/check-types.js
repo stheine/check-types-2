@@ -311,7 +311,11 @@
    *
    * Returns true if `data` is the empty string, false otherwise.
    */
-  function emptyString (data) {
+  function emptyString (data, options) {
+    if (options && options.trim && string(data)) {
+      return data.trim() === '';
+    }
+
     return data === '';
   }
 
@@ -320,7 +324,11 @@
    *
    * Returns true if `data` is a non-empty string, false otherwise.
    */
-  function nonEmptyString (data) {
+  function nonEmptyString (data, options) {
+    if (options && options.trim) {
+      return string(data) && data.trim() !== '';
+    }
+
     return string(data) && data !== '';
   }
 
