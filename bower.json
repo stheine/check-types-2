@@ -1,6 +1,6 @@
 {
     "name": "check-types",
-    "version": "9.0.0",
+    "version": "9.0.1",
     "main": "src/check-types.min.js",
     "ignore": [
         "AUTHORS",

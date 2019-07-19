@@ -1,5 +1,15 @@
 # History
 
+## 9.0.1
+
+### Bug fixes
+
+* docs: link to changes for 9.0.0 (4108a66)
+
+### Other changes
+
+* package: remove package-lock.json from source control (09679a7)
+
 ## 9.0.0
 
 ### Breaking changes
