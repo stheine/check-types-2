@@ -28,6 +28,7 @@ and values.
         * [Some examples](#some-examples)
 * [Are there TypeScript definitions?](#are-there-typescript-definitions)
 * [Where can I use it?](#where-can-i-use-it)
+* [What changed from 8.x to 9.x?](#what-changed-from-8x-to-9x)
 * [What changed from 7.x to 8.x?](#what-changed-from-7x-to-8x)
 * [What changed from 6.x to 7.x?](#what-changed-from-6x-to-7x)
 * [What changed from 5.x to 6.x?](#what-changed-from-5x-to-6x)
