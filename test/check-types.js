@@ -544,28 +544,6 @@
       assert.isFalse(check.nonEmptyString('   ', { trim: true }));
     });
 
-    test('contains function is defined', function () {
-      assert.isFunction(check.contains);
-    });
-
-    test('contains with match returns true', function () {
-      assert.isTrue(check.contains('foo', 'oo'));
-    });
-
-    test('contains with no match returns false', function () {
-      assert.isFalse(check.contains('foo', 'of'));
-    });
-
-    test('contains with coercible object returns false', function () {
-      assert.isFalse(
-        check.contains({
-          toString: function () {
-            return 'foo';
-          }
-        }, 'oo')
-      );
-    });
-
     test('match function is defined', function () {
       assert.isFunction(check.match);
     });
@@ -905,48 +883,66 @@
       });
     }
 
-    test('includes function is defined', function () {
-      assert.isFunction(check.includes);
+    test('contains function is defined', function () {
+      assert.isFunction(check.contains);
     });
 
-    test('includes with matching value in object returns true', function () {
-      assert.isTrue(check.includes({ first: 'foo', second: 'bar' }, 'bar'));
+    test('contains with matching value in object returns true', function () {
+      assert.isTrue(check.contains({ first: 'foo', second: 'bar' }, 'bar'));
     });
 
-    test('includes with non-matching value in object returns false', function () {
-      assert.isFalse(check.includes({ baz: 'foo', qux: 'bar' }, 'baz'));
+    test('contains with non-matching value in object returns false', function () {
+      assert.isFalse(check.contains({ baz: 'foo', qux: 'bar' }, 'baz'));
     });
 
-    test('includes with matching value in array returns true', function () {
-      assert.isTrue(check.includes([ 'foo', 'bar' ], 'bar'));
+    test('contains with matching value in array returns true', function () {
+      assert.isTrue(check.contains([ 'foo', 'bar' ], 'bar'));
     });
 
-    test('includes with non-matching value in array returns false', function () {
-      assert.isFalse(check.includes([ 'foo', 'bar' ], 'baz'));
+    test('contains with non-matching value in array returns false', function () {
+      assert.isFalse(check.contains([ 'foo', 'bar' ], 'baz'));
     });
 
     if (typeof Set !== 'undefined') {
-      test('includes with matching value in set returns true', function () {
-        assert.isTrue(check.includes(new Set([ 'foo', 'bar' ]), 'bar'));
+      test('contains with matching value in set returns true', function () {
+        assert.isTrue(check.contains(new Set([ 'foo', 'bar' ]), 'bar'));
       });
 
-      test('includes with non-matching value in set returns false', function () {
-        assert.isFalse(check.includes(new Set([ 'foo', 'bar' ]), 'baz'));
+      test('contains with non-matching value in set returns false', function () {
+        assert.isFalse(check.contains(new Set([ 'foo', 'bar' ]), 'baz'));
       });
     }
 
     if (typeof Map !== 'undefined') {
-      test('includes with matching value in map returns true', function () {
-        assert.isTrue(check.includes(new Map([['first','foo'], ['second','bar']]), 'bar'));
+      test('contains with matching value in map returns true', function () {
+        assert.isTrue(check.contains(new Map([['first','foo'], ['second','bar']]), 'bar'));
       });
 
-      test('includes with non-matching value in map returns false', function () {
-        assert.isFalse(check.includes(new Map([['baz','foo'], ['qux','bar']]), 'baz'));
+      test('contains with non-matching value in map returns false', function () {
+        assert.isFalse(check.contains(new Map([['baz','foo'], ['qux','bar']]), 'baz'));
       });
     }
 
-    test('includes with null returns false', function () {
-      assert.isFalse(check.includes(null, 'foo'));
+    test('contains with matching value in string returns true', function () {
+      assert.isTrue(check.contains('foo', 'oo'));
+    });
+
+    test('contains with non-matching value in string returns false', function () {
+      assert.isFalse(check.contains('foo', 'of'));
+    });
+
+    test('contains with coercible object returns false', function () {
+      assert.isFalse(
+        check.contains({
+          toString: function () {
+            return 'foo';
+          }
+        }, 'oo')
+      );
+    });
+
+    test('contains with null returns false', function () {
+      assert.isFalse(check.contains(null, 'foo'));
     });
 
     test('inside function is defined', function () {
@@ -988,6 +984,14 @@
         assert.isFalse(check.inside('baz', new Map([['baz','foo'], ['qux','bar']])));
       });
     }
+
+    test('inside with matching value in string returns true', function () {
+      assert.isTrue(check.inside('oo', 'foo'));
+    });
+
+    test('inside with non-matching value in string returns false', function () {
+      assert.isFalse(check.inside('of', 'foo'));
+    });
 
     test('inside with null returns false', function () {
       assert.isFalse(check.inside('foo', null));
@@ -1285,7 +1289,7 @@
       assert.isFunction(check.assert.assigned);
       assert.isFunction(check.assert.primitive);
       assert.isFunction(check.assert.hasLength);
-      assert.isFunction(check.assert.includes);
+      assert.isFunction(check.assert.contains);
       assert.isFunction(check.assert.inside);
       assert.isFunction(check.assert.emptyArray);
       assert.isFunction(check.assert.nonEmptyArray);
@@ -1295,7 +1299,6 @@
       assert.isFunction(check.assert.date);
       assert.isFunction(check.assert.function);
       assert.isFunction(check.assert.match);
-      assert.isFunction(check.assert.contains);
       assert.isFunction(check.assert.nonEmptyString);
       assert.isFunction(check.assert.string);
       assert.isFunction(check.assert.odd);
@@ -1324,16 +1327,16 @@
 
     test('assert modifier is applied to not', function () {
       assert.isObject(check.assert.not);
-      assert.lengthOf(Object.keys(check.assert.not), 41);
+      assert.lengthOf(Object.keys(check.assert.not), 40);
     });
 
     test('assert modifier is applied to maybe', function () {
       assert.isObject(check.assert.maybe);
-      assert.lengthOf(Object.keys(check.assert.maybe), 41);
+      assert.lengthOf(Object.keys(check.assert.maybe), 40);
     });
 
     test('assert modifier has correct number of keys', function () {
-      assert.lengthOf(Object.keys(check.assert), 43);
+      assert.lengthOf(Object.keys(check.assert), 42);
     });
 
     test('assert modifier throws when value is wrong', function () {
@@ -1449,7 +1452,6 @@
       assert.throws(function () { check.assert.string({}) }, 'Invalid string');
       assert.throws(function () { check.assert.emptyString('foo') }, 'Invalid string');
       assert.throws(function () { check.assert.nonEmptyString('') }, 'Invalid string');
-      assert.throws(function () { check.assert.contains('foo', 'bar') }, 'Invalid string');
       assert.throws(function () { check.assert.match('foo', /bar/) }, 'Invalid string');
       assert.throws(function () { check.assert.boolean(0) }, 'Invalid boolean');
       assert.throws(function () { check.assert.object([]) }, 'Invalid object');
@@ -1463,7 +1465,7 @@
       assert.throws(function () { check.assert.nonEmptyArray([]) }, 'Invalid array');
       assert.throws(function () { check.assert.arrayLike({}) }, 'Invalid array-like');
       assert.throws(function () { check.assert.iterable({}) }, 'Invalid iterable');
-      assert.throws(function () { check.assert.includes([], 'foo') }, 'Invalid value');
+      assert.throws(function () { check.assert.contains([], 'foo') }, 'Invalid value');
       assert.throws(function () { check.assert.inside('foo', []) }, 'Invalid value');
       assert.throws(function () { check.assert.hasLength([], 1) }, 'Invalid length');
       assert.throws(function () { check.assert.date({}) }, 'Invalid date');
@@ -1567,7 +1569,7 @@
     });
 
     test('not modifier has correct number of keys', function () {
-      assert.lengthOf(Object.keys(check.not), 41);
+      assert.lengthOf(Object.keys(check.not), 40);
     });
 
     test('not modifier returns true when predicate returns false', function () {
@@ -1608,7 +1610,7 @@
     });
 
     test('maybe modifier has correct number of keys', function () {
-      assert.lengthOf(Object.keys(check.maybe), 41);
+      assert.lengthOf(Object.keys(check.maybe), 40);
     });
 
     test('maybe modifier returns true when value is undefined', function () {
@@ -1764,7 +1766,7 @@
     });
 
     test('array.of has predicates defined', function () {
-      assert.lengthOf(Object.keys(check.array.of), 41);
+      assert.lengthOf(Object.keys(check.array.of), 40);
       assert.isFunction(check.array.of.equal);
       assert.isFunction(check.array.of.undefined);
       assert.isFunction(check.array.of.null);
@@ -1787,7 +1789,6 @@
       assert.isFunction(check.array.of.string);
       assert.isFunction(check.array.of.emptyString);
       assert.isFunction(check.array.of.nonEmptyString);
-      assert.isFunction(check.array.of.contains);
       assert.isFunction(check.array.of.match);
       assert.isFunction(check.array.of.boolean);
       assert.isFunction(check.array.of.object);
@@ -1801,7 +1802,7 @@
       assert.isFunction(check.array.of.nonEmptyArray);
       assert.isFunction(check.array.of.arrayLike);
       assert.isFunction(check.array.of.iterable);
-      assert.isFunction(check.array.of.includes);
+      assert.isFunction(check.array.of.contains);
       assert.isFunction(check.array.of.inside);
       assert.isFunction(check.array.of.hasLength);
       assert.isFunction(check.array.of.date);
@@ -1931,7 +1932,7 @@
     });
 
     test('arrayLike.of has predicates defined', function () {
-      assert.lengthOf(Object.keys(check.arrayLike.of), 41);
+      assert.lengthOf(Object.keys(check.arrayLike.of), 40);
     });
 
     test('arrayLike.of returns true when predicate is true for all items', function () {
@@ -2031,7 +2032,7 @@
     });
 
     test('iterable.of has predicates defined', function () {
-      assert.lengthOf(Object.keys(check.iterable.of), 41);
+      assert.lengthOf(Object.keys(check.iterable.of), 40);
     });
 
     if (typeof Set !== 'undefined') {
@@ -2131,7 +2132,7 @@
     });
 
     test('object.of has predicates defined', function () {
-      assert.lengthOf(Object.keys(check.object.of), 41);
+      assert.lengthOf(Object.keys(check.object.of), 40);
     });
 
     test('object.of returns true when predicate is true for all items', function () {

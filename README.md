@@ -267,16 +267,19 @@ These are implemented by
   `thing.trim()` will be called
   before making the comparison.
 
-* `check.contains(thing, substring)`:
+* `check.contains(string, substring)`:
   Returns `true`
-  if `thing` is a string
-  that contains `substring`,
+  if `string` contains `substring`,
   `false` otherwise.
 
-* `check.match(thing, regex)`:
+* `check.inside(substring, string)`:
   Returns `true`
-  if `thing` is a string
-  that matches `regex`,
+  if `substring` is in `string`,
+  `false` otherwise.
+
+* `check.match(string, regex)`:
+  Returns `true`
+  if `string` matches `regex`,
   `false` otherwise.
 
 #### Number predicates
@@ -404,6 +407,16 @@ These are implemented by
   `constructor.name` and `Object.prototype.toString`
   if the `instanceof` test fails.
 
+* `check.contains(object, value)`:
+  Returns `true`
+  if `object` contains `value`,
+  `false` otherwise.
+
+* `check.inside(value, object)`:
+  Returns `true`
+  if `value` is in `object`,
+  `false` otherwise.
+
 * `check.like(thing, duck)`:
   Duck-typing checker.
   Returns `true`
@@ -440,14 +453,14 @@ These are implemented by
   this predicate falls back
   to `arrayLike` behaviour.
 
-* `check.includes(thing, value)`:
+* `check.contains(array, value)`:
   Returns `true`
-  if `thing` includes `value`,
+  if `array` contains `value`,
   `false` otherwise.
 
-* `check.inside(thing, value)`:
+* `check.inside(value, array)`:
   Returns `true`
-  if `thing` is in `value`,
+  if `value` is in `array`,
   `false` otherwise.
 
 #### Date predicates

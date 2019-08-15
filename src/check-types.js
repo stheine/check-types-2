@@ -31,7 +31,7 @@
     { n: 'null', f: isNull, s: 'v' },
     { n: 'assigned', f: assigned, s: 'v' },
     { n: 'primitive', f: primitive, s: 'v' },
-    { n: 'includes', f: includes, s: 'v' },
+    { n: 'contains', f: contains, s: 'v' },
     { n: 'inside', f: inside, s: 'v' },
     { n: 'zero', f: zero },
     { n: 'infinity', f: infinity },
@@ -50,7 +50,6 @@
     { n: 'string', f: string, s: 's' },
     { n: 'emptyString', f: emptyString, s: 's' },
     { n: 'nonEmptyString', f: nonEmptyString, s: 's' },
-    { n: 'contains', f: contains, s: 's' },
     { n: 'match', f: match, s: 's' },
     { n: 'boolean', f: boolean, s: 'b' },
     { n: 'object', f: object, s: 'o' },
@@ -334,16 +333,6 @@
   }
 
   /**
-   * Public function `contains`.
-   *
-   * Returns true if `data` is a string that contains `substring`, false
-   * otherwise.
-   */
-  function contains (data, substring) {
-    return string(data) && data.indexOf(substring) !== -1;
-  }
-
-  /**
    * Public function `match`.
    *
    * Returns true if `data` is a string that matches `regex`, false otherwise.
@@ -509,15 +498,20 @@
   }
 
   /**
-   * Public function `includes`.
+   * Public function `contains`.
    *
    * Returns true if `data` contains `value`, false otherwise.
+   * Works with objects, arrays and array-likes (including strings).
    */
-  function includes (data, value) {
+  function contains (data, value) {
     var iterator, iteration;
 
     if (! assigned(data)) {
       return false;
+    }
+
+    if (string(data)) {
+      return data.indexOf(value) !== -1;
     }
 
     if (haveSymbols && data[Symbol.iterator] && isFunction(data.values)) {
@@ -543,10 +537,10 @@
    * Public function `inside`.
    *
    * Returns true if `data` is inside `value`, false otherwise.
-   * Like `includes`, but with arguments flipped.
+   * Like `contains`, but with arguments flipped.
    */
   function inside (data, value) {
-    return includes(value, data);
+    return contains(value, data);
   }
 
   /**
