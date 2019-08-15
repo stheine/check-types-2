@@ -945,56 +945,56 @@
       assert.isFalse(check.contains(null, 'foo'));
     });
 
-    test('inside function is defined', function () {
-      assert.isFunction(check.inside);
+    test('in function is defined', function () {
+      assert.isFunction(check.in);
     });
 
-    test('inside with matching value in object returns true', function () {
-      assert.isTrue(check.inside('bar', { first: 'foo', second: 'bar' }));
+    test('in with matching value in object returns true', function () {
+      assert.isTrue(check.in('bar', { first: 'foo', second: 'bar' }));
     });
 
-    test('inside with non-matching value in object returns false', function () {
-      assert.isFalse(check.inside('baz', { baz: 'foo', qux: 'bar' }));
+    test('in with non-matching value in object returns false', function () {
+      assert.isFalse(check.in('baz', { baz: 'foo', qux: 'bar' }));
     });
 
-    test('inside with matching value in array returns true', function () {
-      assert.isTrue(check.inside('bar', [ 'foo', 'bar' ]));
+    test('in with matching value in array returns true', function () {
+      assert.isTrue(check.in('bar', [ 'foo', 'bar' ]));
     });
 
-    test('inside with non-matching value in array returns false', function () {
-      assert.isFalse(check.inside('baz', [ 'foo', 'bar' ]));
+    test('in with non-matching value in array returns false', function () {
+      assert.isFalse(check.in('baz', [ 'foo', 'bar' ]));
     });
 
     if (typeof Set !== 'undefined') {
-      test('inside with matching value in set returns true', function () {
-        assert.isTrue(check.inside('bar', new Set([ 'foo', 'bar' ])));
+      test('in with matching value in set returns true', function () {
+        assert.isTrue(check.in('bar', new Set([ 'foo', 'bar' ])));
       });
 
-      test('inside with non-matching value in set returns false', function () {
-        assert.isFalse(check.inside('baz', new Set([ 'foo', 'bar' ])));
+      test('in with non-matching value in set returns false', function () {
+        assert.isFalse(check.in('baz', new Set([ 'foo', 'bar' ])));
       });
     }
 
     if (typeof Map !== 'undefined') {
-      test('inside with matching value in map returns true', function () {
-        assert.isTrue(check.inside('bar', new Map([['first','foo'], ['second','bar']])));
+      test('in with matching value in map returns true', function () {
+        assert.isTrue(check.in('bar', new Map([['first','foo'], ['second','bar']])));
       });
 
-      test('inside with non-matching value in map returns false', function () {
-        assert.isFalse(check.inside('baz', new Map([['baz','foo'], ['qux','bar']])));
+      test('in with non-matching value in map returns false', function () {
+        assert.isFalse(check.in('baz', new Map([['baz','foo'], ['qux','bar']])));
       });
     }
 
-    test('inside with matching value in string returns true', function () {
-      assert.isTrue(check.inside('oo', 'foo'));
+    test('in with matching value in string returns true', function () {
+      assert.isTrue(check.in('oo', 'foo'));
     });
 
-    test('inside with non-matching value in string returns false', function () {
-      assert.isFalse(check.inside('of', 'foo'));
+    test('in with non-matching value in string returns false', function () {
+      assert.isFalse(check.in('of', 'foo'));
     });
 
-    test('inside with null returns false', function () {
-      assert.isFalse(check.inside('foo', null));
+    test('in with null returns false', function () {
+      assert.isFalse(check.in('foo', null));
     });
 
     test('hasLength function is defined', function () {
@@ -1290,7 +1290,7 @@
       assert.isFunction(check.assert.primitive);
       assert.isFunction(check.assert.hasLength);
       assert.isFunction(check.assert.contains);
-      assert.isFunction(check.assert.inside);
+      assert.isFunction(check.assert.in);
       assert.isFunction(check.assert.emptyArray);
       assert.isFunction(check.assert.nonEmptyArray);
       assert.isFunction(check.assert.array);
@@ -1466,7 +1466,7 @@
       assert.throws(function () { check.assert.arrayLike({}) }, 'Invalid array-like');
       assert.throws(function () { check.assert.iterable({}) }, 'Invalid iterable');
       assert.throws(function () { check.assert.contains([], 'foo') }, 'Invalid value');
-      assert.throws(function () { check.assert.inside('foo', []) }, 'Invalid value');
+      assert.throws(function () { check.assert.in('foo', []) }, 'Invalid value');
       assert.throws(function () { check.assert.hasLength([], 1) }, 'Invalid length');
       assert.throws(function () { check.assert.date({}) }, 'Invalid date');
       assert.throws(function () { check.assert.function({}) }, 'Invalid function');
@@ -1803,7 +1803,7 @@
       assert.isFunction(check.array.of.arrayLike);
       assert.isFunction(check.array.of.iterable);
       assert.isFunction(check.array.of.contains);
-      assert.isFunction(check.array.of.inside);
+      assert.isFunction(check.array.of.in);
       assert.isFunction(check.array.of.hasLength);
       assert.isFunction(check.array.of.date);
       assert.isFunction(check.array.of.function);

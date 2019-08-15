@@ -32,7 +32,7 @@
     { n: 'assigned', f: assigned, s: 'v' },
     { n: 'primitive', f: primitive, s: 'v' },
     { n: 'contains', f: contains, s: 'v' },
-    { n: 'inside', f: inside, s: 'v' },
+    { n: 'in', f: isIn, s: 'v' },
     { n: 'zero', f: zero },
     { n: 'infinity', f: infinity },
     { n: 'number', f: number },
@@ -534,12 +534,12 @@
   }
 
   /**
-   * Public function `inside`.
+   * Public function `in`.
    *
-   * Returns true if `data` is inside `value`, false otherwise.
+   * Returns true if `data` is in `value`, false otherwise.
    * Like `contains`, but with arguments flipped.
    */
-  function inside (data, value) {
+  function isIn (data, value) {
     return contains(value, data);
   }
 

@@ -272,7 +272,7 @@ These are implemented by
   if `string` contains `substring`,
   `false` otherwise.
 
-* `check.inside(substring, string)`:
+* `check.in(substring, string)`:
   Returns `true`
   if `substring` is in `string`,
   `false` otherwise.
@@ -412,7 +412,7 @@ These are implemented by
   if `object` contains `value`,
   `false` otherwise.
 
-* `check.inside(value, object)`:
+* `check.in(value, object)`:
   Returns `true`
   if `value` is in `object`,
   `false` otherwise.
@@ -458,7 +458,7 @@ These are implemented by
   if `array` contains `value`,
   `false` otherwise.
 
-* `check.inside(value, array)`:
+* `check.in(value, array)`:
   Returns `true`
   if `value` is in `array`,
   `false` otherwise.
