@@ -59,7 +59,7 @@ abstracted by a simple API.
 
 ## How little is it?
 
-21 kb unminified with comments, 5.8 kb minified, 2.1 kb minified + gzipped.
+21 kb unminified with comments, 5.9 kb minified, 2.2 kb minified + gzipped.
 
 ## How do I install it?
 
@@ -443,6 +443,11 @@ These are implemented by
 * `check.includes(thing, value)`:
   Returns `true`
   if `thing` includes `value`,
+  `false` otherwise.
+
+* `check.inside(thing, value)`:
+  Returns `true`
+  if `thing` is in `value`,
   `false` otherwise.
 
 #### Date predicates

@@ -32,6 +32,7 @@
     { n: 'assigned', f: assigned, s: 'v' },
     { n: 'primitive', f: primitive, s: 'v' },
     { n: 'includes', f: includes, s: 'v' },
+    { n: 'inside', f: inside, s: 'v' },
     { n: 'zero', f: zero },
     { n: 'infinity', f: infinity },
     { n: 'number', f: number },
@@ -536,6 +537,16 @@
     return some(data, function (key, dataValue) {
       return dataValue === value;
     });
+  }
+
+  /**
+   * Public function `inside`.
+   *
+   * Returns true if `data` is inside `value`, false otherwise.
+   * Like `includes`, but with arguments flipped.
+   */
+  function inside (data, value) {
+    return includes(value, data);
   }
 
   /**
