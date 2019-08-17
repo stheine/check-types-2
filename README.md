@@ -28,6 +28,7 @@ and values.
     * [Some examples](#some-examples)
 * [Are there TypeScript definitions?](#are-there-typescript-definitions)
 * [Where can I use it?](#where-can-i-use-it)
+* [What changed from 9.x to 10.x?](#what-changed-from-9x-to-10x)
 * [What changed from 8.x to 9.x?](#what-changed-from-8x-to-9x)
 * [What changed from 7.x to 8.x?](#what-changed-from-7x-to-8x)
 * [What changed from 6.x to 7.x?](#what-changed-from-6x-to-7x)
@@ -722,6 +723,22 @@ will adhere to that too.
 See the [releases]
 for more information.
 
+## What changed from 9.x to 10.x?
+
+Breaking changes
+were made to the API
+in version 10.0.0.
+
+Specifically,
+the `includes` predicate
+was merged into the `contains` predicate
+and errors thrown by the `assert` modifier
+were given more useful error messages
+including details about the failing data.
+
+See the [history][history10]
+for more details.
+
 ## What changed from 8.x to 9.x?
 
 Breaking changes
@@ -901,6 +918,7 @@ open `test/check-types.html`.
 
 [definitelytyped]: https://github.com/DefinitelyTyped/DefinitelyTyped
 [releases]: https://gitlab.com/philbooth/check-types.js/tags
+[history10]: HISTORY.md#anchor-1000
 [history9]: HISTORY.md#anchor-900
 [history8]: HISTORY.md#anchor-800
 [history7]: HISTORY.md#anchor-70

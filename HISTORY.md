@@ -1,5 +1,20 @@
 # History
 
+## 10.0.0
+
+### Breaking changes
+
+* assert: return detailed error messages from assertions (c0ceacd)
+* api: merge the includes predicate into contains (2fd60c4)
+
+### New features
+
+* predicates: add inside as argument-flipped wrapper for contains (1c95714)
+
+### Refactorings
+
+* api: rename inside predicate to in (55e07a5)
+
 ## 9.0.1
 
 ### Bug fixes
