@@ -1375,7 +1375,7 @@
       try {
         check.assert.even(1);
       } catch (error) {
-        assert.strictEqual(error.message, 'Invalid number');
+        assert.strictEqual(error.message, 'assert failed: expected 1 to be even number');
       }
     });
 
@@ -1391,7 +1391,7 @@
       try {
         check.assert.even(1, '');
       } catch (error) {
-        assert.strictEqual(error.message, 'Invalid number');
+        assert.strictEqual(error.message, 'assert failed: expected 1 to be even number');
       }
     });
 
@@ -1416,7 +1416,7 @@
       try {
         check.assert.nonEmptyString('', null, '');
       } catch (error) {
-        assert.strictEqual(error.message, 'Invalid string');
+        assert.strictEqual(error.message, 'assert failed: expected "" to be non-empty string');
       }
     });
 
@@ -1430,46 +1430,46 @@
     });
 
     test('assert throws errors with the correct messages', function () {
-      assert.throws(function () { check.assert.equal('foo', 'bar') }, 'Invalid value');
-      assert.throws(function () { check.assert.undefined(null) }, 'Invalid value');
-      assert.throws(function () { check.assert.null() }, 'Invalid value');
-      assert.throws(function () { check.assert.assigned(null) }, 'Invalid value');
-      assert.throws(function () { check.assert.primitive({}) }, 'Invalid value');
-      assert.throws(function () { check.assert.zero(1) }, 'Invalid number');
-      assert.throws(function () { check.assert.infinity(-1) }, 'Invalid number');
-      assert.throws(function () { check.assert.number('') }, 'Invalid number');
-      assert.throws(function () { check.assert.integer(1.1) }, 'Invalid number');
-      assert.throws(function () { check.assert.even(1) }, 'Invalid number');
-      assert.throws(function () { check.assert.odd(2) }, 'Invalid number');
-      assert.throws(function () { check.assert.greater(1, 1) }, 'Invalid number');
-      assert.throws(function () { check.assert.less(1, 1) }, 'Invalid number');
-      assert.throws(function () { check.assert.between(1, 1, 2) }, 'Invalid number');
-      assert.throws(function () { check.assert.greaterOrEqual(1, 2) }, 'Invalid number');
-      assert.throws(function () { check.assert.lessOrEqual(2, 1) }, 'Invalid number');
-      assert.throws(function () { check.assert.inRange(1, 2, 3) }, 'Invalid number');
-      assert.throws(function () { check.assert.positive(0) }, 'Invalid number');
-      assert.throws(function () { check.assert.negative(0) }, 'Invalid number');
-      assert.throws(function () { check.assert.string({}) }, 'Invalid string');
-      assert.throws(function () { check.assert.emptyString('foo') }, 'Invalid string');
-      assert.throws(function () { check.assert.nonEmptyString('') }, 'Invalid string');
-      assert.throws(function () { check.assert.match('foo', /bar/) }, 'Invalid string');
-      assert.throws(function () { check.assert.boolean(0) }, 'Invalid boolean');
-      assert.throws(function () { check.assert.object([]) }, 'Invalid object');
-      assert.throws(function () { check.assert.emptyObject({ foo: 'bar' }) }, 'Invalid object');
-      assert.throws(function () { check.assert.nonEmptyObject({}) }, 'Invalid object');
-      assert.throws(function () { check.assert.instanceStrict('', String) }, 'Invalid type');
-      assert.throws(function () { check.assert.instance('', Date) }, 'Invalid type');
-      assert.throws(function () { check.assert.like({a: 5}, {b: 2}) }, 'Invalid type');
-      assert.throws(function () { check.assert.array({}) }, 'Invalid array');
-      assert.throws(function () { check.assert.emptyArray([ 'foo' ]) }, 'Invalid array');
-      assert.throws(function () { check.assert.nonEmptyArray([]) }, 'Invalid array');
-      assert.throws(function () { check.assert.arrayLike({}) }, 'Invalid array-like');
-      assert.throws(function () { check.assert.iterable({}) }, 'Invalid iterable');
-      assert.throws(function () { check.assert.contains([], 'foo') }, 'Invalid value');
-      assert.throws(function () { check.assert.in('foo', []) }, 'Invalid value');
-      assert.throws(function () { check.assert.hasLength([], 1) }, 'Invalid length');
-      assert.throws(function () { check.assert.date({}) }, 'Invalid date');
-      assert.throws(function () { check.assert.function({}) }, 'Invalid function');
+      assert.throws(function () { check.assert.equal('foo', 'bar') }, 'assert failed: expected "foo" to equal "bar"');
+      assert.throws(function () { check.assert.undefined(null) }, 'assert failed: expected null to be undefined');
+      assert.throws(function () { check.assert.null() }, 'assert failed: expected undefined to be null');
+      assert.throws(function () { check.assert.assigned(null) }, 'assert failed: expected null to be assigned');
+      assert.throws(function () { check.assert.primitive(TypeError()) }, 'assert failed: expected TypeError to be primitive type');
+      assert.throws(function () { check.assert.zero(1) }, 'assert failed: expected 1 to be 0');
+      assert.throws(function () { check.assert.infinity(-1) }, 'assert failed: expected -1 to be infinity');
+      assert.throws(function () { check.assert.number('') }, 'assert failed: expected "" to be Number');
+      assert.throws(function () { check.assert.integer(1.1) }, 'assert failed: expected 1.1 to be integer');
+      assert.throws(function () { check.assert.even(1) }, 'assert failed: expected 1 to be even number');
+      assert.throws(function () { check.assert.odd(2) }, 'assert failed: expected 2 to be odd number');
+      assert.throws(function () { check.assert.greater(1, 1) }, 'assert failed: expected 1 to be greater than 1');
+      assert.throws(function () { check.assert.less(1, 1) }, 'assert failed: expected 1 to be less than 1');
+      assert.throws(function () { check.assert.between(1, 1, 2) }, 'assert failed: expected 1 to be between 1 and 2');
+      assert.throws(function () { check.assert.greaterOrEqual(1, 2) }, 'assert failed: expected 1 to be greater than or equal to 2');
+      assert.throws(function () { check.assert.lessOrEqual(2, 1) }, 'assert failed: expected 2 to be less than or equal to 1');
+      assert.throws(function () { check.assert.inRange(1, 2, 3) }, 'assert failed: expected 1 to be in the range 2 to 3');
+      assert.throws(function () { check.assert.positive(0) }, 'assert failed: expected 0 to be positive number');
+      assert.throws(function () { check.assert.negative(0) }, 'assert failed: expected 0 to be negative number');
+      assert.throws(function () { check.assert.string({}) }, 'assert failed: expected Object to be String');
+      assert.throws(function () { check.assert.emptyString('"f\\o\/o"') }, 'assert failed: expected "\\"f\\\\o/o\\"" to be empty string');
+      assert.throws(function () { check.assert.nonEmptyString({}) }, 'assert failed: expected Object to be non-empty string');
+      assert.throws(function () { check.assert.match('foo', /"b\\a\/r"/) }, 'assert failed: expected "foo" to match /"b\\\\a\\/r"/');
+      assert.throws(function () { check.assert.boolean(0) }, 'assert failed: expected 0 to be Boolean');
+      assert.throws(function () { check.assert.object([]) }, 'assert failed: expected Array to be Object');
+      assert.throws(function () { check.assert.emptyObject({ foo: 'bar' }) }, 'assert failed: expected Object to be empty object');
+      assert.throws(function () { check.assert.nonEmptyObject({}) }, 'assert failed: expected Object to be non-empty object');
+      assert.throws(function () { check.assert.instanceStrict('foo', String) }, 'assert failed: expected "foo" to be instanceof String');
+      assert.throws(function () { check.assert.instance('', Date) }, 'assert failed: expected "" to be Date');
+      assert.throws(function () { check.assert.like({a: 5}, {b: 2}) }, 'assert failed: expected Object to be like Object');
+      assert.throws(function () { check.assert.array({}) }, 'assert failed: expected Object to be Array');
+      assert.throws(function () { check.assert.emptyArray([ 'foo' ]) }, 'assert failed: expected Array to be empty array');
+      assert.throws(function () { check.assert.nonEmptyArray([]) }, 'assert failed: expected Array to be non-empty array');
+      assert.throws(function () { check.assert.arrayLike({}) }, 'assert failed: expected Object to be array-like');
+      assert.throws(function () { check.assert.iterable({}) }, 'assert failed: expected Object to be iterable');
+      assert.throws(function () { check.assert.contains([], 'foo') }, 'assert failed: expected Array to contain "foo"');
+      assert.throws(function () { check.assert.in('foo', []) }, 'assert failed: expected "foo" to be in Array');
+      assert.throws(function () { check.assert.hasLength([], 1) }, 'assert failed: expected Array to have length 1');
+      assert.throws(function () { check.assert.date({}) }, 'assert failed: expected Object to be valid Date');
+      assert.throws(function () { check.assert.function({}) }, 'assert failed: expected Object to be Function');
     });
 
 
@@ -1514,7 +1514,7 @@
         check.assert(false);
       } catch (error) {
         assert.instanceOf(error, Error);
-        assert.equal(error.message, 'Assertion failed');
+        assert.equal(error.message, 'assert failed');
       }
 
       try {
@@ -1664,7 +1664,7 @@
       try {
         check.assert.not.odd(1);
       } catch (error) {
-        assert.strictEqual(error.message, 'Invalid number');
+        assert.strictEqual(error.message, 'assert failed: expected 1 not to be odd number');
       }
     });
 
@@ -1680,7 +1680,7 @@
       try {
         check.assert.not.odd(1, '');
       } catch (error) {
-        assert.strictEqual(error.message, 'Invalid number');
+        assert.strictEqual(error.message, 'assert failed: expected 1 not to be odd number');
       }
     });
 
@@ -1697,7 +1697,7 @@
       try {
         check.assert.not.emptyString('   ', { trim: true });
       } catch (error) {
-        assert.strictEqual(error.message, 'Invalid string');
+        assert.strictEqual(error.message, 'assert failed: expected "   " not to be empty string');
       }
     });
 
@@ -1713,7 +1713,7 @@
       try {
         check.assert.not.emptyString('   ', { trim: true }, '');
       } catch (error) {
-        assert.strictEqual(error.message, 'Invalid string');
+        assert.strictEqual(error.message, 'assert failed: expected "   " not to be empty string');
       }
     });
 

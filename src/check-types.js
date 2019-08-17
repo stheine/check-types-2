@@ -4,71 +4,56 @@
 (function (globals) {
   'use strict';
 
-  var strings, messages, predicates, functions, assert, not, maybe,
-      collections, slice, neginf, posinf, isArray, keys, haveSymbols;
-
-  strings = {
-    v: 'value',
-    n: 'number',
-    s: 'string',
-    b: 'boolean',
-    o: 'object',
-    t: 'type',
-    a: 'array',
-    al: 'array-like',
-    i: 'iterable',
-    d: 'date',
-    f: 'function',
-    l: 'length'
-  };
+  var messages, predicates, functions, assert, not, maybe, collections,
+     slice, neginf, posinf, isArray, keys, haveSymbols;
 
   messages = {};
   predicates = {};
 
   [
-    { n: 'equal', f: equal, s: 'v' },
-    { n: 'undefined', f: isUndefined, s: 'v' },
-    { n: 'null', f: isNull, s: 'v' },
-    { n: 'assigned', f: assigned, s: 'v' },
-    { n: 'primitive', f: primitive, s: 'v' },
-    { n: 'contains', f: contains, s: 'v' },
-    { n: 'in', f: isIn, s: 'v' },
-    { n: 'zero', f: zero },
-    { n: 'infinity', f: infinity },
-    { n: 'number', f: number },
-    { n: 'integer', f: integer },
-    { n: 'even', f: even },
-    { n: 'odd', f: odd },
-    { n: 'greater', f: greater },
-    { n: 'less', f: less },
-    { n: 'between', f: between },
-    { n: 'greaterOrEqual', f: greaterOrEqual },
-    { n: 'lessOrEqual', f: lessOrEqual },
-    { n: 'inRange', f: inRange },
-    { n: 'positive', f: positive },
-    { n: 'negative', f: negative },
-    { n: 'string', f: string, s: 's' },
-    { n: 'emptyString', f: emptyString, s: 's' },
-    { n: 'nonEmptyString', f: nonEmptyString, s: 's' },
-    { n: 'match', f: match, s: 's' },
-    { n: 'boolean', f: boolean, s: 'b' },
-    { n: 'object', f: object, s: 'o' },
-    { n: 'emptyObject', f: emptyObject, s: 'o' },
-    { n: 'nonEmptyObject', f: nonEmptyObject, s: 'o' },
-    { n: 'instanceStrict', f: instanceStrict, s: 't' },
-    { n: 'instance', f: instance, s: 't' },
-    { n: 'like', f: like, s: 't' },
-    { n: 'array', f: array, s: 'a' },
-    { n: 'emptyArray', f: emptyArray, s: 'a' },
-    { n: 'nonEmptyArray', f: nonEmptyArray, s: 'a' },
-    { n: 'arrayLike', f: arrayLike, s: 'al' },
-    { n: 'iterable', f: iterable, s: 'i' },
-    { n: 'date', f: date, s: 'd' },
-    { n: 'function', f: isFunction, s: 'f' },
-    { n: 'hasLength', f: hasLength, s: 'l' },
+    { n: 'equal', f: equal, s: 'equal {e}' },
+    { n: 'undefined', f: isUndefined, s: 'be undefined' },
+    { n: 'null', f: isNull, s: 'be null' },
+    { n: 'assigned', f: assigned, s: 'be assigned' },
+    { n: 'primitive', f: primitive, s: 'be primitive type' },
+    { n: 'contains', f: contains, s: 'contain {e}' },
+    { n: 'in', f: isIn, s: 'be in {e}' },
+    { n: 'zero', f: zero, s: 'be 0' },
+    { n: 'infinity', f: infinity, s: 'be infinity' },
+    { n: 'number', f: number, s: 'be Number' },
+    { n: 'integer', f: integer, s: 'be integer' },
+    { n: 'even', f: even, s: 'be even number' },
+    { n: 'odd', f: odd, s: 'be odd number' },
+    { n: 'greater', f: greater, s: 'be greater than {e}' },
+    { n: 'less', f: less, s: 'be less than {e}' },
+    { n: 'between', f: between, s: 'be between {e} and {e2}' },
+    { n: 'greaterOrEqual', f: greaterOrEqual, s: 'be greater than or equal to {e}' },
+    { n: 'lessOrEqual', f: lessOrEqual, s: 'be less than or equal to {e}' },
+    { n: 'inRange', f: inRange, s: 'be in the range {e} to {e2}' },
+    { n: 'positive', f: positive, s: 'be positive number' },
+    { n: 'negative', f: negative, s: 'be negative number' },
+    { n: 'string', f: string, s: 'be String' },
+    { n: 'emptyString', f: emptyString, s: 'be empty string' },
+    { n: 'nonEmptyString', f: nonEmptyString, s: 'be non-empty string' },
+    { n: 'match', f: match, s: 'match {e}' },
+    { n: 'boolean', f: boolean, s: 'be Boolean' },
+    { n: 'object', f: object, s: 'be Object' },
+    { n: 'emptyObject', f: emptyObject, s: 'be empty object' },
+    { n: 'nonEmptyObject', f: nonEmptyObject, s: 'be non-empty object' },
+    { n: 'instanceStrict', f: instanceStrict, s: 'be instanceof {t}' },
+    { n: 'instance', f: instance, s: 'be {t}' },
+    { n: 'like', f: like, s: 'be like {e}' },
+    { n: 'array', f: array, s: 'be Array' },
+    { n: 'emptyArray', f: emptyArray, s: 'be empty array' },
+    { n: 'nonEmptyArray', f: nonEmptyArray, s: 'be non-empty array' },
+    { n: 'arrayLike', f: arrayLike, s: 'be array-like' },
+    { n: 'iterable', f: iterable, s: 'be iterable' },
+    { n: 'date', f: date, s: 'be valid Date' },
+    { n: 'function', f: isFunction, s: 'be Function' },
+    { n: 'hasLength', f: hasLength, s: 'have length {e}' },
   ].map(function (data) {
     var n = data.n;
-    messages[n] = 'Invalid ' + strings[data.s || 'n'];
+    messages[n] = 'assert failed: expected {a} to ' + data.s;
     predicates[n] = data.f;
   });
 
@@ -90,8 +75,8 @@
   assert = createModifiedPredicates(assertModifier, assertImpl);
   not = createModifiedPredicates(notModifier, notImpl);
   maybe = createModifiedPredicates(maybeModifier, maybeImpl);
-  assert.not = createModifiedModifier(assertModifier, not);
-  assert.maybe = createModifiedModifier(assertModifier, maybe);
+  assert.not = createModifiedModifier(assertModifier, not, 'not ');
+  assert.maybe = createModifiedModifier(assertModifier, maybe, 'maybe ');
 
   collections.forEach(createOfPredicates);
   createOfModifiers(assert, assertModifier);
@@ -709,27 +694,52 @@
    */
   function assertModifier (predicate, defaultMessage) {
     return function () {
-      return assertPredicate(predicate, arguments, defaultMessage);
+      var args = arguments;
+      var argCount = predicate.l || predicate.length;
+      var message = args[argCount];
+      var ErrorType = args[argCount + 1];
+
+      assertImpl(
+        predicate.apply(null, args),
+        nonEmptyString(message) ? message : defaultMessage
+          .replace('{a}', messageFormatter(args[0]))
+          .replace('{e}', messageFormatter(args[1]))
+          .replace('{e2}', messageFormatter(args[2]))
+          .replace('{t}', function () {
+            var arg = args[1];
+
+            if (arg && arg.name) {
+              return arg.name;
+            }
+
+            return arg;
+          }),
+        isFunction(ErrorType) ? ErrorType : TypeError
+      );
+
+      return args[0];
     };
   }
 
-  function assertPredicate (predicate, args, defaultMessage) {
-    var argCount = predicate.l || predicate.length;
-    var message = args[argCount];
-    var ErrorType = args[argCount + 1];
-    assertImpl(
-      predicate.apply(null, args),
-      nonEmptyString(message) ? message : defaultMessage,
-      isFunction(ErrorType) ? ErrorType : TypeError
-    );
-    return args[0];
+  function messageFormatter (arg) {
+    return function () {
+      if (string(arg)) {
+        return '"' + arg.replace(/\\/g, '\\\\').replace(/"/g, '\\"') + '"';
+      }
+
+      if (arg && arg.constructor && ! instanceStrict(arg, RegExp) && typeof arg !== 'number') {
+        return arg.constructor.name;
+      }
+
+      return arg;
+    };
   }
 
   function assertImpl (value, message, ErrorType) {
     if (value) {
       return value;
     }
-    throw new (ErrorType || Error)(message || 'Assertion failed');
+    throw new (ErrorType || Error)(message || 'assert failed');
   }
 
   /**
@@ -838,37 +848,41 @@
   }
 
   function createModifiedPredicates (modifier, object) {
-    return createModifiedFunctions([ modifier, predicates, object ]);
+    return createModifiedFunctions([ modifier, predicates, object, '' ]);
   }
 
   function createModifiedFunctions (args) {
-    var modifier, object, functions, result;
+    var modifier, messageModifier, object, functions;
 
     modifier = args.shift();
+    messageModifier = args.pop();
     object = args.pop();
     functions = args.pop();
 
-    result = object || {};
-
     forEach(functions, function (key, fn) {
-      Object.defineProperty(result, key, {
+      var message = messages[key];
+      if (message && messageModifier) {
+        message = message.replace('to', messageModifier + 'to');
+      }
+
+      Object.defineProperty(object, key, {
         configurable: false,
         enumerable: true,
         writable: false,
-        value: modifier.apply(null, args.concat(fn, messages[key]))
+        value: modifier.apply(null, args.concat(fn, message))
       });
     });
 
-    return result;
+    return object;
   }
 
-  function createModifiedModifier (modifier, modified) {
-    return createModifiedFunctions([ modifier, modified, null ]);
+  function createModifiedModifier (modifier, modified, messageModifier) {
+    return createModifiedFunctions([ modifier, modified, {}, messageModifier ]);
   }
 
   function createOfPredicates (key) {
     predicates[key].of = createModifiedFunctions(
-      [ ofModifier.bind(null, null), predicates[key], predicates, null ]
+      [ ofModifier.bind(null, null), predicates[key], predicates, {}, '' ]
     );
   }
 
@@ -880,7 +894,7 @@
 
   function createMaybeOfModifiers (key) {
     maybe[key].of = createModifiedFunctions(
-      [ ofModifier.bind(null, 'maybe'), predicates[key], predicates, null ]
+      [ ofModifier.bind(null, 'maybe'), predicates[key], predicates, {}, '' ]
     );
     assert.maybe[key].of = createModifiedModifier(assertModifier, maybe[key].of);
     assert.not[key].of = createModifiedModifier(assertModifier, not[key].of);

@@ -25,7 +25,7 @@ and values.
         * [Function predicates](#function-predicates)
         * [Modifiers](#modifiers)
         * [Batch operations](#batch-operations)
-        * [Some examples](#some-examples)
+    * [Some examples](#some-examples)
 * [Are there TypeScript definitions?](#are-there-typescript-definitions)
 * [Where can I use it?](#where-can-i-use-it)
 * [What changed from 8.x to 9.x?](#what-changed-from-8x-to-9x)
@@ -59,7 +59,7 @@ abstracted by a simple API.
 
 ## How little is it?
 
-21 kb unminified with comments, 5.9 kb minified, 2.2 kb minified + gzipped.
+22 kb unminified with comments, 6.7 kb minified, 2.4 kb minified + gzipped.
 
 ## How do I install it?
 
@@ -565,7 +565,7 @@ These are implemented by
   in an array or object
   returned by `map`.
 
-#### Some examples
+### Some examples
 
 ```javascript
 check.even(3);
@@ -583,18 +583,68 @@ check.maybe.even(null);
 ```
 
 ```javascript
-check.assert.like({ foo: 'bar' }, { baz: 'qux' });
-// Throws `new TypeError('Invalid type')`
+check.assert.even(3);
+// Throws `new TypeError('assert failed: expected 3 to be even number')`
 ```
 
 ```javascript
-check.assert.not.like({ foo: 'bar' }, { baz: 'qux' });
-// Doesn't throw, returns `{ foo: 'bar' }`
+check.assert.not.even(3);
+// Doesn't throw
 ```
 
 ```javascript
-check.assert.maybe.like(undefined, { foo: 'bar' });
-// Doesn't throw, returns `undefined`
+check.assert.maybe.even(null);
+// Doesn't throw
+```
+
+```javascript
+check.contains('foo', 'oo')
+// Returns true
+```
+
+```javascript
+check.contains('foe', 'oo')
+// Returns false
+```
+
+```javascript
+check.contains(['foo', 'bar'], 'bar')
+// Returns true
+```
+
+```javascript
+check.contains(['foo', 'bar'], 'ar')
+// Returns false
+```
+
+```javascript
+check.like({ foo: 'bar' }, { foo: 'baz' });
+// Returns true
+```
+
+```javascript
+check.like({ foo: 'bar' }, { baz: 'qux' });
+// Returns false
+```
+
+```javascript
+check.array.of.nonEmptyString([ 'foo', 'bar' ]);
+// Returns true
+```
+
+```javascript
+check.array.of.nonEmptyString([ 'foo', 'bar', '' ]);
+// Returns false
+```
+
+```javascript
+check.array.of.inRange([ 0, 1, 2 ], 0, 2);
+// Returns true
+```
+
+```javascript
+check.array.of.inRange([ 0, 1, 2 ], 0, 1);
+// Returns false
 ```
 
 ```javascript
