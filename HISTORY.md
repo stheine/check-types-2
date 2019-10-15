@@ -1,5 +1,16 @@
 # History
 
+## 10.1.0
+
+### New features
+
+* api: add keyIn predicate (1ff2227)
+* api: add containsKey predicate (40c28c7)
+
+### Other changes
+
+* lib: fix lint errors (dcecb88)
+
 ## 10.0.0
 
 ### Breaking changes
