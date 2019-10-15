@@ -60,7 +60,7 @@ abstracted by a simple API.
 
 ## How little is it?
 
-22 kb unminified with comments, 6.7 kb minified, 2.4 kb minified + gzipped.
+22 kb unminified with comments, 6.8 kb minified, 2.4 kb minified + gzipped.
 
 ## How do I install it?
 
@@ -416,6 +416,11 @@ These are implemented by
 * `check.in(value, object)`:
   Returns `true`
   if `value` is in `object`,
+  `false` otherwise.
+
+* `check.containsKey(object, key)`:
+  Returns `true`
+  if `object` contains key `key`,
   `false` otherwise.
 
 * `check.like(thing, duck)`:

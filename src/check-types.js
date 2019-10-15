@@ -5,7 +5,7 @@
   'use strict';
 
   var messages, predicates, functions, assert, not, maybe, collections,
-     slice, neginf, posinf, isArray, keys, haveSymbols;
+     slice, neginf, posinf, isArray, keys, haveSymbols, haveMaps;
 
   messages = {};
   predicates = {};
@@ -18,6 +18,7 @@
     { n: 'primitive', f: primitive, s: 'be primitive type' },
     { n: 'contains', f: contains, s: 'contain {e}' },
     { n: 'in', f: isIn, s: 'be in {e}' },
+    { n: 'containsKey', f: containsKey, s: 'contain key {e}' },
     { n: 'zero', f: zero, s: 'be 0' },
     { n: 'infinity', f: infinity, s: 'be infinity' },
     { n: 'number', f: number, s: 'be Number' },
@@ -70,6 +71,7 @@
   isArray = Array.isArray;
   keys = Object.keys;
   haveSymbols = typeof Symbol === 'function';
+  haveMaps = typeof Map === 'function';
 
   functions = mixin(functions, predicates);
   assert = createModifiedPredicates(assertModifier, assertImpl);
@@ -526,6 +528,30 @@
    */
   function isIn (data, value) {
     return contains(value, data);
+  }
+
+  /**
+   * Public function `containsKey`.
+   *
+   * Returns true if `data` contains key `key`, false otherwise.
+   * Works with objects, arrays and array-likes (including strings).
+   */
+  function containsKey (data, key) {
+    var iterator, iteration;
+
+    if (! assigned(data)) {
+      return false;
+    }
+
+    if (haveMaps && instanceStrict(data, Map)) {
+      return data.has(key);
+    }
+
+    if (iterable(data) && ! number(+key)) {
+      return false;
+    }
+
+    return !! data[key];
   }
 
   /**
