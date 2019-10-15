@@ -19,6 +19,7 @@
     { n: 'contains', f: contains, s: 'contain {e}' },
     { n: 'in', f: isIn, s: 'be in {e}' },
     { n: 'containsKey', f: containsKey, s: 'contain key {e}' },
+    { n: 'keyIn', f: keyIn, s: 'be key in {e}' },
     { n: 'zero', f: zero, s: 'be 0' },
     { n: 'infinity', f: infinity, s: 'be infinity' },
     { n: 'number', f: number, s: 'be Number' },
@@ -523,11 +524,11 @@
   /**
    * Public function `in`.
    *
-   * Returns true if `data` is in `value`, false otherwise.
+   * Returns true if `value` is in `data`, false otherwise.
    * Like `contains`, but with arguments flipped.
    */
-  function isIn (data, value) {
-    return contains(value, data);
+  function isIn (value, data) {
+    return contains(data, value);
   }
 
   /**
@@ -552,6 +553,16 @@
     }
 
     return !! data[key];
+  }
+
+  /**
+   * Public function `keyIn`.
+   *
+   * Returns true if key `key` is in `data`, false otherwise.
+   * Like `contains`, but with arguments flipped.
+   */
+  function keyIn (key, data) {
+    return containsKey(data, key);
   }
 
   /**
