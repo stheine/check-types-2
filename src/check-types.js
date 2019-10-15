@@ -1,4 +1,4 @@
-/*globals define, module, Symbol */
+/*globals define, module, Symbol, Map */
 /*jshint -W056 */
 
 (function (globals) {
@@ -538,8 +538,6 @@
    * Works with objects, arrays and array-likes (including strings).
    */
   function containsKey (data, key) {
-    var iterator, iteration;
-
     if (! assigned(data)) {
       return false;
     }
