@@ -425,7 +425,7 @@ These are implemented by
 
 * `check.keyIn(key, object)`:
   Returns `true`
-  if `value` is in `object`,
+  if key `key` is in `object`,
   `false` otherwise.
 
 * `check.like(thing, duck)`:
