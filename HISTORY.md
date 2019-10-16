@@ -1,5 +1,11 @@
 # History
 
+## 10.1.1
+
+### Bug fixes
+
+* docs: fix broken description for keyIn predicate (6eb431e)
+
 ## 10.1.0
 
 ### New features
