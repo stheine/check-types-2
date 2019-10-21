@@ -1,11 +1,11 @@
-/*globals define, module, Symbol, Map */
+/*globals define, module, Symbol, Map, Set */
 /*jshint -W056 */
 
 (function (globals) {
   'use strict';
 
   var messages, predicates, functions, assert, not, maybe, collections,
-     slice, neginf, posinf, isArray, keys, haveSymbols, haveMaps;
+     slice, neginf, posinf, isArray, keys, haveSymbols, haveMaps, haveSets;
 
   messages = {};
   predicates = {};
@@ -73,6 +73,7 @@
   keys = Object.keys;
   haveSymbols = typeof Symbol === 'function';
   haveMaps = typeof Map === 'function';
+  haveSets = typeof Set === 'function';
 
   functions = mixin(functions, predicates);
   assert = createModifiedPredicates(assertModifier, assertImpl);
@@ -496,6 +497,10 @@
 
     if (! assigned(data)) {
       return false;
+    }
+
+    if (haveSets && instanceStrict(data, Set)) {
+      return data.has(value);
     }
 
     if (string(data)) {
