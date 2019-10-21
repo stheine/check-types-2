@@ -1,5 +1,11 @@
 # History
 
+## 10.1.2
+
+### Performance improvements
+
+* lib: shortcut unnecessary iteration for Sets in contains (522f073)
+
 ## 10.1.1
 
 ### Bug fixes
