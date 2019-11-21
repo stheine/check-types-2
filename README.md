@@ -46,7 +46,7 @@ and values.
 Writing explicit conditions
 in your functions
 to check arguments
-and throw exceptions
+and throw errors
 is a task that
 swiftly becomes tiresome
 and adds complexity
@@ -493,6 +493,11 @@ These are implemented by
   if `thing` is a function,
   `false` otherwise.
 
+* `check.throws(() => thing())`:
+  Returns `true`
+  if `thing` is a function that throws,
+  `false` otherwise.
+
 #### Modifiers
 
 * `check.not(value)`:
@@ -701,6 +706,20 @@ check.any(
         check.string
     )
 );
+// Returns true
+```
+
+```javascript
+check.throws(() => {
+  testFunction({called: 'with wrong parameters'}); // Throws on wrong parameters
+});
+// Returns true
+```
+
+```javascript
+await check.rejects(async() => {
+  await testFunction({called: 'with wrong parameters'}); // Throws on wrong parameters
+});
 // Returns true
 ```
 

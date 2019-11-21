@@ -1433,16 +1433,16 @@
 
     test('assert modifier is applied to not', function () {
       assert.isObject(check.assert.not);
-      assert.lengthOf(Object.keys(check.assert.not), 43);
+      assert.lengthOf(Object.keys(check.assert.not), 44);
     });
 
     test('assert modifier is applied to maybe', function () {
       assert.isObject(check.assert.maybe);
-      assert.lengthOf(Object.keys(check.assert.maybe), 43);
+      assert.lengthOf(Object.keys(check.assert.maybe), 44);
     });
 
     test('assert modifier has correct number of keys', function () {
-      assert.lengthOf(Object.keys(check.assert), 45);
+      assert.lengthOf(Object.keys(check.assert), 46);
     });
 
     test('assert modifier throws when value is wrong', function () {
@@ -1678,7 +1678,7 @@
     });
 
     test('not modifier has correct number of keys', function () {
-      assert.lengthOf(Object.keys(check.not), 43);
+      assert.lengthOf(Object.keys(check.not), 44);
     });
 
     test('not modifier returns true when predicate returns false', function () {
@@ -1719,7 +1719,7 @@
     });
 
     test('maybe modifier has correct number of keys', function () {
-      assert.lengthOf(Object.keys(check.maybe), 43);
+      assert.lengthOf(Object.keys(check.maybe), 44);
     });
 
     test('maybe modifier returns true when value is undefined', function () {
@@ -1875,7 +1875,7 @@
     });
 
     test('array.of has predicates defined', function () {
-      assert.lengthOf(Object.keys(check.array.of), 43);
+      assert.lengthOf(Object.keys(check.array.of), 44);
       assert.isFunction(check.array.of.equal);
       assert.isFunction(check.array.of.undefined);
       assert.isFunction(check.array.of.null);
@@ -2044,7 +2044,7 @@
     });
 
     test('arrayLike.of has predicates defined', function () {
-      assert.lengthOf(Object.keys(check.arrayLike.of), 43);
+      assert.lengthOf(Object.keys(check.arrayLike.of), 44);
     });
 
     test('arrayLike.of returns true when predicate is true for all items', function () {
@@ -2144,7 +2144,7 @@
     });
 
     test('iterable.of has predicates defined', function () {
-      assert.lengthOf(Object.keys(check.iterable.of), 43);
+      assert.lengthOf(Object.keys(check.iterable.of), 44);
     });
 
     if (typeof Set !== 'undefined') {
@@ -2244,7 +2244,7 @@
     });
 
     test('object.of has predicates defined', function () {
-      assert.lengthOf(Object.keys(check.object.of), 43);
+      assert.lengthOf(Object.keys(check.object.of), 44);
     });
 
     test('object.of returns true when predicate is true for all items', function () {
@@ -2338,6 +2338,20 @@
         assert.isFalse(check.object.of.nonEmptyString(new Set([ 'foo', 'bar' ])));
       });
     }
+
+    test('throws with non function returns false', function () {
+      assert.isFalse(check.throws({}));
+    });
+
+    test('throws with throwing function returns true', function () {
+      assert.isTrue(check.throws(function () {
+        throw new Error();
+      }));
+    });
+
+    test('throws with non-throwing function returns false', function () {
+      assert.isFalse(check.throws(function () {}));
+    });
   });
 }(typeof require === 'function' ? require : undefined));
 

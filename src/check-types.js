@@ -55,6 +55,7 @@
     { n: 'date', f: date, s: 'be valid Date' },
     { n: 'function', f: isFunction, s: 'be Function' },
     { n: 'hasLength', f: hasLength, s: 'have length {e}' },
+    { n: 'throws', f: throws, s: 'throw' }
   ].map(function (data) {
     var n = data.n;
     messages[n] = 'assert failed: expected {a} to ' + data.s;
@@ -607,6 +608,25 @@
    */
   function isFunction (data) {
     return typeof data === 'function';
+  }
+
+  /**
+   * Public function `throws`.
+   *
+   * Returns true if `data` is a function that throws, false otherwise.
+   */
+  function throws (data) {
+    if (! isFunction(data)) {
+      return false;
+    }
+
+    try {
+      data();
+    } catch (error) {
+      return true;
+    }
+
+    return false;
   }
 
   /**
