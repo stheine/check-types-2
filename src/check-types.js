@@ -21,6 +21,7 @@
     { n: 'containsKey', f: containsKey, s: 'contain key {e}' },
     { n: 'keyIn', f: keyIn, s: 'be key in {e}' },
     { n: 'zero', f: zero, s: 'be 0' },
+    { n: 'one', f: one, s: 'be 1' },
     { n: 'infinity', f: infinity, s: 'be infinity' },
     { n: 'number', f: number, s: 'be Number' },
     { n: 'integer', f: integer, s: 'be integer' },
@@ -157,6 +158,15 @@
    */
   function zero (data) {
     return data === 0;
+  }
+
+  /**
+   * Public function `one`.
+   *
+   * Returns true if `data` is one, false otherwise.
+   */
+  function one (data) {
+    return data === 1;
   }
 
   /**

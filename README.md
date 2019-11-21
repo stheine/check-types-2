@@ -305,6 +305,11 @@ These are implemented by
   if `thing` is zero,
   `false` otherwise.
 
+* `check.one(thing)`:
+  Returns `true`
+  if `thing` is one,
+  `false` otherwise.
+
 * `check.infinity(thing)`:
   Returns `true`
   if `thing` is positive or negative infinity,
