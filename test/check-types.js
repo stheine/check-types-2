@@ -736,33 +736,6 @@
       });
     });
 
-    suite('mock Object.prototype.toString:', function () {
-      var toString;
-
-      setup(function () {
-        toString = Object.prototype.toString;
-        Object.prototype.toString = function () {
-          return '[object Array]';
-        };
-      });
-
-      teardown(function () {
-        Object.prototype.toString = toString;
-      });
-
-      test('instanceStrict with matching prototype returns false', function () {
-        assert.isFalse(check.instanceStrict({}, Array));
-      });
-
-      test('instance with matching prototype returns true', function () {
-        assert.isTrue(check.instance({}, Array));
-      });
-
-      test('instance with non-matching prototype returns false', function () {
-        assert.isFalse(check.instance({}, Error));
-      });
-    });
-
     test('like function is defined', function () {
       assert.isFunction(check.like);
     });

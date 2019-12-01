@@ -5,7 +5,8 @@
   'use strict';
 
   var messages, predicates, functions, assert, not, maybe, collections,
-     slice, neginf, posinf, isArray, keys, haveSymbols, haveMaps, haveSets;
+     hasOwnProperty, toString, keys, slice, isArray, neginf, posinf,
+     haveSymbols, haveMaps, haveSets;
 
   messages = {};
   predicates = {};
@@ -67,11 +68,13 @@
   };
 
   collections = [ 'array', 'arrayLike', 'iterable', 'object' ];
+  hasOwnProperty = Object.prototype.hasOwnProperty;
+  toString = Object.prototype.toString;
+  keys = Object.keys;
   slice = Array.prototype.slice;
+  isArray = Array.isArray;
   neginf = Number.NEGATIVE_INFINITY;
   posinf = Number.POSITIVE_INFINITY;
-  isArray = Array.isArray;
-  keys = Object.keys;
   haveSymbols = typeof Symbol === 'function';
   haveMaps = typeof Map === 'function';
   haveSets = typeof Set === 'function';
@@ -355,7 +358,7 @@
    * Returns true if `data` is a plain-old JS object, false otherwise.
    */
   function object (data) {
-    return Object.prototype.toString.call(data) === '[object Object]';
+    return toString.call(data) === '[object Object]';
   }
 
   /**
@@ -371,7 +374,7 @@
 
   function some (data, predicate) {
     for (var key in data) {
-      if (data.hasOwnProperty(key)) {
+      if (hasOwnProperty.call(data, key)) {
         if (predicate(key, data[key])) {
           return true;
         }
@@ -416,7 +419,7 @@
     try {
       return instanceStrict(data, prototype) ||
         data.constructor.name === prototype.name ||
-        Object.prototype.toString.call(data) === '[object ' + prototype.name + ']';
+        toString.call(data) === '[object ' + prototype.name + ']';
     } catch (error) {
       return false;
     }
@@ -432,8 +435,8 @@
     var name;
 
     for (name in archetype) {
-      if (archetype.hasOwnProperty(name)) {
-        if (data.hasOwnProperty(name) === false || typeof data[name] !== typeof archetype[name]) {
+      if (hasOwnProperty.call(archetype, name)) {
+        if (hasOwnProperty.call(data, name) === false || typeof data[name] !== typeof archetype[name]) {
           return false;
         }
 
@@ -659,7 +662,7 @@
 
   function forEach (object, action) {
     for (var key in object) {
-      if (object.hasOwnProperty(key)) {
+      if (hasOwnProperty.call(object, key)) {
         action(key, object[key]);
       }
     }
@@ -697,7 +700,7 @@
     var key, value;
 
     for (key in data) {
-      if (data.hasOwnProperty(key)) {
+      if (hasOwnProperty.call(data, key)) {
         value = data[key];
 
         if (object(value) && testObject(value, result) === result) {
