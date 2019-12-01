@@ -538,10 +538,6 @@
       );
     });
 
-    test('emptyString supports trim option', function () {
-      assert.isTrue(check.emptyString('   ', { trim: true }));
-    });
-
     test('nonEmptyString function is defined', function () {
       assert.isFunction(check.nonEmptyString);
     });
@@ -562,10 +558,6 @@
           }
         })
       );
-    });
-
-    test('nonEmptyString supports trim option', function () {
-      assert.isFalse(check.nonEmptyString('   ', { trim: true }));
     });
 
     test('match function is defined', function () {
@@ -1459,13 +1451,13 @@
 
     test('assert modifier with multi-argument predicate throws when value is wrong', function () {
       assert.throws(function () {
-        check.assert.nonEmptyString(' ', { trim: true });
+        check.assert.match(' ', /^\w+$/);
       });
     });
 
     test('assert modifier with multi-argument predicate does not throw when value is correct', function () {
       assert.doesNotThrow(function () {
-        check.assert.nonEmptyString(' ', { trim: false });
+        check.assert.match(' ', /^\s+$/);
       });
     });
 
@@ -1512,7 +1504,7 @@
 
     test('assert modifer with multi-argument predicate sets message on error', function () {
       try {
-        check.assert.nonEmptyString('', null, 'foo bar');
+        check.assert.match('', /^\w+$/, 'foo bar');
       } catch (error) {
         assert.strictEqual(error.message, 'foo bar');
       }
@@ -1520,15 +1512,15 @@
 
     test('assert modifier with multi-argument predicate prohibits empty error messages', function () {
       try {
-        check.assert.nonEmptyString('', null, '');
+        check.assert.match('', /^\w+$/, '');
       } catch (error) {
-        assert.strictEqual(error.message, 'assert failed: expected "" to be non-empty string');
+        assert.strictEqual(error.message, 'assert failed: expected "" to match /^\\w+$/');
       }
     });
 
     test('assert modifer with multi-argument predicate sets custom error types', function () {
       try {
-        check.assert.nonEmptyString('', null, 'foo bar', SyntaxError);
+        check.assert.match('', /^\w+$/, 'foo bar', SyntaxError);
       } catch (error) {
         assert.instanceOf(error, SyntaxError);
         assert.strictEqual(error.message, 'foo bar');
@@ -1805,15 +1797,15 @@
 
     test('assert modifier with not and multi-argument predicate sets default message on error', function () {
       try {
-        check.assert.not.emptyString('   ', { trim: true });
+        check.assert.not.match('   ', /^\s*$/);
       } catch (error) {
-        assert.strictEqual(error.message, 'assert failed: expected "   " not to be empty string');
+        assert.strictEqual(error.message, 'assert failed: expected "   " not to match /^\\s*$/');
       }
     });
 
     test('assert modifer with not and multi-argument predicate sets message on error', function () {
       try {
-        check.assert.not.emptyString('   ', { trim: true }, 'foo bar');
+        check.assert.not.match('   ', /^\s*$/, 'foo bar');
       } catch (error) {
         assert.strictEqual(error.message, 'foo bar');
       }
@@ -1821,15 +1813,15 @@
 
     test('assert modifier with not and multi-argument predicate prohibits empty error messages', function () {
       try {
-        check.assert.not.emptyString('   ', { trim: true }, '');
+        check.assert.not.match('   ', /^\s*$/, '');
       } catch (error) {
-        assert.strictEqual(error.message, 'assert failed: expected "   " not to be empty string');
+        assert.strictEqual(error.message, 'assert failed: expected "   " not to match /^\\s*$/');
       }
     });
 
     test('assert modifer with not and multi-argument predicate sets custom error types', function () {
       try {
-        check.assert.not.emptyString('   ', { trim: true }, 'foo bar', SyntaxError);
+        check.assert.not.match('   ', /^\s*$/, 'foo bar', SyntaxError);
       } catch (error) {
         assert.instanceOf(error, SyntaxError);
         assert.strictEqual(error.message, 'foo bar');

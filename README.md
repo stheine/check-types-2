@@ -254,19 +254,11 @@ These are implemented by
   Returns `true`
   if `thing` is the empty string,
   `false` otherwise.
-  If `options.trim` is truthy
-  and `thing` is a string,
-  `thing.trim()` will be called
-  before making the comparison.
 
 * `check.nonEmptyString(thing, options)`:
   Returns `true`
   if `thing` is a non-empty string,
   `false` otherwise.
-  If `options.trim` is truthy
-  and `thing` is a string,
-  `thing.trim()` will be called
-  before making the comparison.
 
 * `check.contains(string, substring)`:
   Returns `true`
@@ -756,6 +748,26 @@ will adhere to that too.
 
 See the [releases]
 for more information.
+
+## What changed from 10.x to 11.x?
+
+Breaking changes
+were made to the API
+in version 11.0.0.
+
+Specifically,
+the `options` argument was removed
+from the `emptyString` and `nonEmptyString` predicates
+because it caused problematic behaviour in the `assert` modifier.
+Callers who were previously using `options.trim` with these predicates
+should call `check.match` instead:
+
+```js
+check.match(stringWithSpaces, /^\s*$/);
+```
+
+See the [history][history11]
+for more details.
 
 ## What changed from 9.x to 10.x?
 
