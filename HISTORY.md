@@ -1,5 +1,26 @@
 # History
 
+## 11.0.0
+
+### Breaking changes
+
+* api: remove trim option from emptyString and nonEmptyString (3747900)
+
+### New features
+
+* predicates: implement float (b6bf1dc)
+* predicates: implement throws (018f50a)
+* predicates: implement one (3fb7424)
+
+### Bug fixes
+
+* lib: stop object predicates throwing when prototypes is null (b0bab07)
+
+### Other changes
+
+* tests: add missing test case for assert.throws (6f9c2f7)
+* docs: update author list (81ab8a9)
+
 ## 10.1.2
 
 ### Performance improvements
