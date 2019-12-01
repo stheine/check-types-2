@@ -1579,6 +1579,7 @@
       assert.throws(function () { check.assert.hasLength([], 1) }, 'assert failed: expected Array to have length 1');
       assert.throws(function () { check.assert.date({}) }, 'assert failed: expected Object to be valid Date');
       assert.throws(function () { check.assert.function({}) }, 'assert failed: expected Object to be Function');
+      assert.throws(function () { check.assert.throws(function () {}) }, 'assert failed: expected Function to throw');
     });
 
 
