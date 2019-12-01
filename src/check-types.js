@@ -26,6 +26,7 @@
     { n: 'infinity', f: infinity, s: 'be infinity' },
     { n: 'number', f: number, s: 'be Number' },
     { n: 'integer', f: integer, s: 'be integer' },
+    { n: 'float', f: float, s: 'be non-integer number' },
     { n: 'even', f: even, s: 'be even number' },
     { n: 'odd', f: odd, s: 'be odd number' },
     { n: 'greater', f: greater, s: 'be greater than {e}' },
@@ -198,6 +199,15 @@
    */
   function integer (data) {
     return typeof data === 'number' && data % 1 === 0;
+  }
+
+  /**
+   * Public function `float`.
+   *
+   * Returns true if `data` is a non-integer number, false otherwise.
+   */
+  function float (data) {
+    return number(data) && data % 1 !== 0;
   }
 
   /**

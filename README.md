@@ -292,6 +292,11 @@ These are implemented by
   if `thing` is an integer,
   `false` otherwise.
 
+* `check.float(thing)`:
+  Returns `true`
+  if `thing` is a non-integer number,
+  `false` otherwise.
+
 * `check.zero(thing)`:
   Returns `true`
   if `thing` is zero,

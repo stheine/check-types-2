@@ -250,6 +250,26 @@
       assert.isFalse(check.integer('1'));
     });
 
+    test('float function is defined', function () {
+      assert.isFunction(check.float);
+    });
+
+    test('float with floating point number returns true', function () {
+      assert.isTrue(check.float(-1.5));
+    });
+
+    test('float with integer returns false', function () {
+      assert.isFalse(check.float(1));
+    });
+
+    test('float with infinity returns false', function () {
+      assert.isFalse(check.float(Infinity));
+    });
+
+    test('float with string returns false', function () {
+      assert.isFalse(check.float('1.5'));
+    });
+
     test('even function is defined', function () {
       assert.isFunction(check.even);
     });
@@ -1425,16 +1445,16 @@
 
     test('assert modifier is applied to not', function () {
       assert.isObject(check.assert.not);
-      assert.lengthOf(Object.keys(check.assert.not), 44);
+      assert.lengthOf(Object.keys(check.assert.not), 45);
     });
 
     test('assert modifier is applied to maybe', function () {
       assert.isObject(check.assert.maybe);
-      assert.lengthOf(Object.keys(check.assert.maybe), 44);
+      assert.lengthOf(Object.keys(check.assert.maybe), 45);
     });
 
     test('assert modifier has correct number of keys', function () {
-      assert.lengthOf(Object.keys(check.assert), 46);
+      assert.lengthOf(Object.keys(check.assert), 47);
     });
 
     test('assert modifier throws when value is wrong', function () {
@@ -1538,6 +1558,7 @@
       assert.throws(function () { check.assert.infinity(-1) }, 'assert failed: expected -1 to be infinity');
       assert.throws(function () { check.assert.number('') }, 'assert failed: expected "" to be Number');
       assert.throws(function () { check.assert.integer(1.1) }, 'assert failed: expected 1.1 to be integer');
+      assert.throws(function () { check.assert.float(1) }, 'assert failed: expected 1 to be non-integer number');
       assert.throws(function () { check.assert.even(1) }, 'assert failed: expected 1 to be even number');
       assert.throws(function () { check.assert.odd(2) }, 'assert failed: expected 2 to be odd number');
       assert.throws(function () { check.assert.greater(1, 1) }, 'assert failed: expected 1 to be greater than 1');
@@ -1671,7 +1692,7 @@
     });
 
     test('not modifier has correct number of keys', function () {
-      assert.lengthOf(Object.keys(check.not), 44);
+      assert.lengthOf(Object.keys(check.not), 45);
     });
 
     test('not modifier returns true when predicate returns false', function () {
@@ -1712,7 +1733,7 @@
     });
 
     test('maybe modifier has correct number of keys', function () {
-      assert.lengthOf(Object.keys(check.maybe), 44);
+      assert.lengthOf(Object.keys(check.maybe), 45);
     });
 
     test('maybe modifier returns true when value is undefined', function () {
@@ -1868,7 +1889,7 @@
     });
 
     test('array.of has predicates defined', function () {
-      assert.lengthOf(Object.keys(check.array.of), 44);
+      assert.lengthOf(Object.keys(check.array.of), 45);
       assert.isFunction(check.array.of.equal);
       assert.isFunction(check.array.of.undefined);
       assert.isFunction(check.array.of.null);
@@ -2037,7 +2058,7 @@
     });
 
     test('arrayLike.of has predicates defined', function () {
-      assert.lengthOf(Object.keys(check.arrayLike.of), 44);
+      assert.lengthOf(Object.keys(check.arrayLike.of), 45);
     });
 
     test('arrayLike.of returns true when predicate is true for all items', function () {
@@ -2137,7 +2158,7 @@
     });
 
     test('iterable.of has predicates defined', function () {
-      assert.lengthOf(Object.keys(check.iterable.of), 44);
+      assert.lengthOf(Object.keys(check.iterable.of), 45);
     });
 
     if (typeof Set !== 'undefined') {
@@ -2237,7 +2258,7 @@
     });
 
     test('object.of has predicates defined', function () {
-      assert.lengthOf(Object.keys(check.object.of), 44);
+      assert.lengthOf(Object.keys(check.object.of), 45);
     });
 
     test('object.of returns true when predicate is true for all items', function () {
