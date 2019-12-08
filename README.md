@@ -707,20 +707,6 @@ check.any(
 // Returns true
 ```
 
-```javascript
-check.throws(() => {
-  testFunction({called: 'with wrong parameters'}); // Throws on wrong parameters
-});
-// Returns true
-```
-
-```javascript
-await check.rejects(async() => {
-  await testFunction({called: 'with wrong parameters'}); // Throws on wrong parameters
-});
-// Returns true
-```
-
 ## Are there TypeScript definitions?
 
 [Yes](https://www.npmjs.com/package/@types/check-types)!
