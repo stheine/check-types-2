@@ -398,6 +398,11 @@ These are implemented by
   if `thing` is a non-empty object,
   `false` otherwise.
 
+* `check.thenable(thing)`:
+  Returns `true`
+  if `thing` has a `then` method,
+  `false` otherwise.
+
 * `check.instanceStrict(thing, prototype)`:
   Returns `true`
   if `thing` is an instance of `prototype`,
