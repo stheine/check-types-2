@@ -1,5 +1,16 @@
 # History
 
+## 11.1.0
+
+### New features
+
+* predicates: add thenable (d95829c)
+
+### Other changes
+
+* docs: remove some examples (8c67463)
+* docs: add missing link to readme index (3da9662)
+
 ## 11.0.0
 
 ### Breaking changes
