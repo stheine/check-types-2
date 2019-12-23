@@ -1,5 +1,12 @@
 # History
 
+## 11.1.1
+
+### Other changes
+
+* build: update minified script (99f024b)
+* docs: tweak comment (6a69673)
+
 ## 11.1.0
 
 ### New features
