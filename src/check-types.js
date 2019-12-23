@@ -46,7 +46,7 @@
     { n: 'emptyObject', f: emptyObject, s: 'be empty object' },
     { n: 'nonEmptyObject', f: nonEmptyObject, s: 'be non-empty object' },
     { n: 'instanceStrict', f: instanceStrict, s: 'be instanceof {t}' },
-    { n: 'thenable', f: thenable, s: 'be a promise' },
+    { n: 'thenable', f: thenable, s: 'be promise-like' },
     { n: 'instance', f: instance, s: 'be {t}' },
     { n: 'like', f: like, s: 'be like {e}' },
     { n: 'array', f: array, s: 'be Array' },
@@ -402,7 +402,7 @@
   /**
    * Public function `thenable`.
    *
-   * Returns true if `data` is a promise, false otherwise.
+   * Returns true if `data` has a `then` method.
    */
   function thenable (data) {
     return assigned(data) && isFunction(data.then);
