@@ -1565,6 +1565,7 @@
 
     test('assert throws errors with the correct messages', function () {
       assert.throws(function () { check.assert.equal('foo', 'bar') }, 'assert failed: expected "foo" to equal "bar"');
+      assert.throws(function () { check.assert.equal(true, false) }, 'assert failed: expected true to equal false');
       assert.throws(function () { check.assert.undefined(null) }, 'assert failed: expected null to be undefined');
       assert.throws(function () { check.assert.null() }, 'assert failed: expected undefined to be null');
       assert.throws(function () { check.assert.assigned(null) }, 'assert failed: expected null to be assigned');

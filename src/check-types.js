@@ -812,7 +812,7 @@
         return '"' + arg.replace(/\\/g, '\\\\').replace(/"/g, '\\"') + '"';
       }
 
-      if (arg && arg.constructor && ! instanceStrict(arg, RegExp) && typeof arg !== 'number') {
+      if (arg && arg !== true && arg.constructor && ! instanceStrict(arg, RegExp) && typeof arg !== 'number') {
         return arg.constructor.name;
       }
 
