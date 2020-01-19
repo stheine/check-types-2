@@ -1,5 +1,11 @@
 # History
 
+## 11.1.2
+
+### Bug fixes
+
+* errors: format `true` correctly in error messages (51291ef)
+
 ## 11.1.1
 
 ### Other changes
