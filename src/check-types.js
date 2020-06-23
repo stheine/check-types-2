@@ -42,6 +42,8 @@
     { n: 'nonEmptyString', f: nonEmptyString, s: 'be non-empty string' },
     { n: 'match', f: match, s: 'match {e}' },
     { n: 'boolean', f: boolean, s: 'be Boolean' },
+    { n: 'true', f: isTrue, s: 'be true' },
+    { n: 'false', f: isFalse, s: 'be false' },
     { n: 'object', f: object, s: 'be Object' },
     { n: 'emptyObject', f: emptyObject, s: 'be empty object' },
     { n: 'nonEmptyObject', f: nonEmptyObject, s: 'be non-empty object' },
@@ -354,6 +356,24 @@
    */
   function boolean (data) {
     return data === false || data === true;
+  }
+
+  /**
+   * Public function `true`.
+   *
+   * Returns true if `data` is a boolean value with the value `true`, false otherwise.
+   */
+  function isTrue (data) {
+    return boolean(data) && data === true;
+  }
+
+  /**
+   * Public function `false`.
+   *
+   * Returns true if `data` is a boolean value with the value `false`, false otherwise.
+   */
+  function isFalse (data) {
+    return boolean(data) && data === false;
   }
 
   /**

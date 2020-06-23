@@ -381,6 +381,16 @@ These are implemented by
   if `thing` is a boolean,
   `false` otherwise.
 
+* `check.true(thing)`:
+  Returns `true`
+  if `thing` is true,
+  `false` otherwise.
+
+* `check.false(thing)`:
+  Returns `true`
+  if `thing` is false,
+  `false` otherwise.
+
 #### Object predicates
 
 * `check.object(thing)`:
