@@ -1,5 +1,15 @@
 # History
 
+## 11.2.0
+
+### New features
+
+* Add true() and false() (7921f0a)
+
+### Other changes
+
+* //gitlab.com/philbooth] decided to archive the project, I created a fork and published a new packages `check-types-2`. Thanks for Phil for the great work. (4b1e544)
+
 ## 11.1.2
 
 ### Bug fixes
