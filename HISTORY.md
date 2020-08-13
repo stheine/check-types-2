@@ -1,5 +1,16 @@
 # History
 
+## 11.3.0
+
+### New features
+
+* implement rejects (d316f87)
+
+### Other changes
+
+* 4daa3a1 Enhance package description (4daa3a1)
+* d485e71 Add swap files to .gitignore (d485e71)
+
 ## 11.2.0
 
 ### New features
