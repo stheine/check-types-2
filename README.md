@@ -511,6 +511,11 @@ These are implemented by
   if `thing` is a function that throws,
   `false` otherwise.
 
+* `check.rejects(async() => await thing())`:
+  Returns `true`
+  if `thing` as an async function / function returning a Promise that is rejecting,
+  `false` otherwise.
+
 #### Modifiers
 
 * `check.not(value)`:
@@ -719,6 +724,20 @@ check.any(
         check.string
     )
 );
+// Returns true
+```
+
+```javascript
+check.throws(() => {
+  testFunction({called: 'with wrong parameters'}); // Throws on wrong parameters
+});
+// Returns true
+```
+
+```javascript
+await check.rejects(async() => {
+  await testFunction({called: 'with wrong parameters'}); // Throws on wrong parameters
+});
 // Returns true
 ```
 

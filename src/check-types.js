@@ -59,7 +59,8 @@
     { n: 'date', f: date, s: 'be valid Date' },
     { n: 'function', f: isFunction, s: 'be Function' },
     { n: 'hasLength', f: hasLength, s: 'have length {e}' },
-    { n: 'throws', f: throws, s: 'throw' }
+    { n: 'throws', f: throws, s: 'throw' },
+    { n: 'rejects', f: rejects, s: 'rejects' },
   ].map(function (data) {
     var n = data.n;
     messages[n] = 'assert failed: expected {a} to ' + data.s;
@@ -659,6 +660,23 @@
     }
 
     return false;
+  }
+
+  /**
+   * Public function `rejects`.
+   *
+   * Returns true if `func` as an async function / function returning a Promise that is rejecting, false otherwise.
+   */
+  function rejects (data) {
+    if (! isFunction(data)) {
+      return false;
+    }
+
+    return new Promise (function (resolve) {
+      data()
+        .then (function () { resolve (false); })
+        .catch (function () { resolve (true); });
+    });
   }
 
   /**
