@@ -1,5 +1,17 @@
 # History
 
+## 11.4.0
+
+### New features
+
+* implement throwsWith and rejectsWith (4b5cebc)
+
+### Other changes
+
+* ee9d478 Add release cheatsheet (ee9d478)
+* 07775dd Update documentation, referencing the fork and the original author (07775dd)
+* f2b789c update (f2b789c)
+
 ## 11.3.0
 
 ### New features
