@@ -1,0 +1,5 @@
+npm test
+./node_modules/.bin/release
+# In case that fails, change to #!/bin/bash
+git push
+npm publish
