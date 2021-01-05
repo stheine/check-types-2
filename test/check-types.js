@@ -1511,16 +1511,16 @@
 
     test('assert modifier is applied to not', function () {
       assert.isObject(check.assert.not);
-      assert.lengthOf(Object.keys(check.assert.not), 49);
+      assert.lengthOf(Object.keys(check.assert.not), 51);
     });
 
     test('assert modifier is applied to maybe', function () {
       assert.isObject(check.assert.maybe);
-      assert.lengthOf(Object.keys(check.assert.maybe), 49);
+      assert.lengthOf(Object.keys(check.assert.maybe), 51);
     });
 
     test('assert modifier has correct number of keys', function () {
-      assert.lengthOf(Object.keys(check.assert), 51);
+      assert.lengthOf(Object.keys(check.assert), 53);
     });
 
     test('assert modifier throws when value is wrong', function () {
@@ -1662,6 +1662,8 @@
       assert.throws(function () { check.assert.date({}) }, 'assert failed: expected Object to be valid Date');
       assert.throws(function () { check.assert.function({}) }, 'assert failed: expected Object to be Function');
       assert.throws(function () { check.assert.throws(function () {}) }, 'assert failed: expected Function to throw');
+      assert.throws(function () { check.assert.throwsWith(function () {}, 'fail') }, 'assert failed: expected Function to throw with "fail"');
+      assert.throws(function () { check.assert.throwsWith(function () {}, /^fail$/) }, 'assert failed: expected Function to throw with /^fail$/');
     });
 
 
@@ -1761,7 +1763,7 @@
     });
 
     test('not modifier has correct number of keys', function () {
-      assert.lengthOf(Object.keys(check.not), 49);
+      assert.lengthOf(Object.keys(check.not), 51);
     });
 
     test('not modifier returns true when predicate returns false', function () {
@@ -1802,7 +1804,7 @@
     });
 
     test('maybe modifier has correct number of keys', function () {
-      assert.lengthOf(Object.keys(check.maybe), 49);
+      assert.lengthOf(Object.keys(check.maybe), 51);
     });
 
     test('maybe modifier returns true when value is undefined', function () {
@@ -1958,7 +1960,7 @@
     });
 
     test('array.of has predicates defined', function () {
-      assert.lengthOf(Object.keys(check.array.of), 49);
+      assert.lengthOf(Object.keys(check.array.of), 51);
       assert.isFunction(check.array.of.equal);
       assert.isFunction(check.array.of.undefined);
       assert.isFunction(check.array.of.null);
@@ -2129,7 +2131,7 @@
     });
 
     test('arrayLike.of has predicates defined', function () {
-      assert.lengthOf(Object.keys(check.arrayLike.of), 49);
+      assert.lengthOf(Object.keys(check.arrayLike.of), 51);
     });
 
     test('arrayLike.of returns true when predicate is true for all items', function () {
@@ -2229,7 +2231,7 @@
     });
 
     test('iterable.of has predicates defined', function () {
-      assert.lengthOf(Object.keys(check.iterable.of), 49);
+      assert.lengthOf(Object.keys(check.iterable.of), 51);
     });
 
     if (typeof Set !== 'undefined') {
@@ -2329,7 +2331,7 @@
     });
 
     test('object.of has predicates defined', function () {
-      assert.lengthOf(Object.keys(check.object.of), 49);
+      assert.lengthOf(Object.keys(check.object.of), 51);
     });
 
     test('object.of returns true when predicate is true for all items', function () {
@@ -2438,6 +2440,42 @@
       assert.isFalse(check.throws(function () {}));
     });
 
+    test('throwsWith with non function returns false', function () {
+      assert.isFalse(check.throwsWith({}, 'fail'));
+    });
+
+    test('throwsWith with non string or pattern returns false', function () {
+      assert.isFalse(check.throwsWith(function () {}, {}));
+    });
+
+    test('throws with non-throwing function returns false', function () {
+      assert.isFalse(check.throws(function () {}, 'fail'));
+    });
+
+    test('throwsWith with throwing function matching string returns true', function () {
+      assert.isTrue(check.throwsWith(function () {
+        throw new Error('fail');
+      }, 'fail'));
+    });
+
+    test('throwsWith with throwing function not matching string returns false', function () {
+      assert.isFalse(check.throwsWith(function () {
+        throw new Error('other error');
+      }, 'fail'));
+    });
+
+    test('throwsWith with throwing function matching pattern returns true', function () {
+      assert.isTrue(check.throwsWith(function () {
+        throw new Error('fail');
+      }, /^fail$/));
+    });
+
+    test('throwsWith with throwing function not matching pattern returns false', function () {
+      assert.isFalse(check.throwsWith(function () {
+        throw new Error('other error');
+      }, /^fail$/));
+    });
+
     test('rejects with non function returns false', function () {
       assert.isFalse(check.rejects({}));
     });
@@ -2463,6 +2501,65 @@
         done();
       });
     });
+
+    test('rejectsWith with non function returns false', function () {
+      assert.isFalse(check.rejectsWith({}, 'fail'));
+    });
+
+    test('rejectsWith with non string or pattern returns false', function () {
+      assert.isFalse(check.rejectsWith(function () {}, {}));
+    });
+
+    test('rejectsWith with non-rejecting function returns false', function (done) {
+      check.rejectsWith(function () {
+        return new Promise (function (resolve) {
+          resolve();
+        });
+      }, 'fail').then(function (result) {
+        assert.isFalse (result);
+
+        done();
+      });
+    });
+
+    test('rejectsWith with rejecting function matching string returns true', function (done) {
+      check.rejectsWith(function () {
+        return Promise.reject(new Error('fail'));
+      }, 'fail').then(function (result) {
+        assert.isTrue (result);
+
+        done();
+      });
+    });
+
+    test('rejectsWith with rejecting function not matching string returns false', function (done) {
+      check.rejectsWith(function () {
+        return Promise.reject(new Error('other error'));
+      }, 'fail').then(function (result) {
+        assert.isFalse (result);
+
+        done();
+      });
+    });
+
+    test('rejectsWith with rejecting function matching pattern returns true', function (done) {
+      check.rejectsWith(function () {
+        return Promise.reject(new Error('fail'));
+      }, /^fail$/).then(function (result) {
+        assert.isTrue (result);
+
+        done();
+      });
+    });
+
+    test('rejectsWith with rejecting function not matching pattern returns false', function (done) {
+      check.rejectsWith(function () {
+        return Promise.reject(new Error('other error'));
+      }, /^fail$/).then(function (result) {
+        assert.isFalse (result);
+
+        done();
+      });
+    });
   });
 }(typeof require === 'function' ? require : undefined));
-

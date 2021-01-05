@@ -60,7 +60,9 @@
     { n: 'function', f: isFunction, s: 'be Function' },
     { n: 'hasLength', f: hasLength, s: 'have length {e}' },
     { n: 'throws', f: throws, s: 'throw' },
+    { n: 'throwsWith', f: throwsWith, s: 'throw with {e}' },
     { n: 'rejects', f: rejects, s: 'rejects' },
+    { n: 'rejectsWith', f: rejectsWith, s: 'rejects with {e}' },
   ].map(function (data) {
     var n = data.n;
     messages[n] = 'assert failed: expected {a} to ' + data.s;
@@ -290,10 +292,10 @@
    */
   function inRange (data, x, y) {
     if (x < y) {
-      return greaterOrEqual(data, x) && data <= y;
+      return greaterOrEqual(data, x) && lessOrEqual(data, y);
     }
 
-    return lessOrEqual(data, x) && data >= y;
+    return lessOrEqual(data, x) && greaterOrEqual(data, y);
   }
 
   /**
@@ -516,7 +518,7 @@
    * Returns true if `data` is an array-like object, false otherwise.
    */
   function arrayLike (data) {
-    return assigned(data) && data.length >= 0;
+    return assigned(data) && greaterOrEqual(data.length, 0);
   }
 
   /**
@@ -663,9 +665,39 @@
   }
 
   /**
+   * Public function `throwsWith`.
+   *
+   * Returns true if `data` is a function that throws with a specific error, false otherwise.
+   */
+  function throwsWith (data, message) {
+    if (! isFunction(data)) {
+      return false;
+    }
+
+    if (! string(message) && ! instanceStrict (message, RegExp)) {
+      return false;
+    }
+
+    try {
+      data();
+    } catch (error) {
+      if (string (message) && message === error.message) {
+        return true;
+      }
+      if (instanceStrict (message, RegExp) && message.test (error.message)) {
+        return true;
+      }
+
+      return false;
+    }
+
+    return false;
+  }
+
+  /**
    * Public function `rejects`.
    *
-   * Returns true if `func` as an async function / function returning a Promise that is rejecting, false otherwise.
+   * Returns true if `data` is an async function / function returning a Promise that is rejecting, false otherwise.
    */
   function rejects (data) {
     if (! isFunction(data)) {
@@ -676,6 +708,36 @@
       data()
         .then (function () { resolve (false); })
         .catch (function () { resolve (true); });
+    });
+  }
+
+  /**
+   * Public function `rejectsWith`.
+   *
+   * Returns true if `data` is an async function / function returning a Promise that is rejecting with a specific message, false otherwise.
+   */
+  function rejectsWith (data, message) {
+    if (! isFunction(data)) {
+      return false;
+    }
+
+    if (! string(message) && ! instanceStrict (message, RegExp)) {
+      return false;
+    }
+
+    return new Promise (function (resolve) {
+      data()
+        .then (function () { resolve (false); })
+        .catch (function (error) {
+          if (string (message) && message === error.message) {
+            resolve (true);
+          }
+          if (instanceStrict (message, RegExp) && message.test (error.message)) {
+            resolve (true);
+          }
+
+          resolve (false);
+        });
     });
   }
 

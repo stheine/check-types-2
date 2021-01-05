@@ -511,10 +511,23 @@ These are implemented by
   if `thing` is a function that throws,
   `false` otherwise.
 
-* `check.rejects(async() => await thing())`:
+* `check.throwsWith(() => thing(), message)`:
   Returns `true`
-  if `thing` as an async function / function returning a Promise that is rejecting,
+  if `thing` is a function that throws with a specific error,
   `false` otherwise.
+  `message` can be a string or pattern.
+
+* `check.rejects(async() => await thing(), message)`:
+  Returns `true`
+  if `thing` as an async function / function returning a Promise that is rejecting with a specific error,
+  `false` otherwise.
+  `message` can be a string or pattern.
+
+* `check.rejectsWith(async() => await thing(), message)`:
+  Returns `true`
+  if `thing` as an async function / function returning a Promise that is rejecting with a specific error,
+  `false` otherwise.
+  `message` can be a string or pattern.
 
 #### Modifiers
 
@@ -735,9 +748,33 @@ check.throws(() => {
 ```
 
 ```javascript
+check.throwsWith(() => {
+  testFunction({called: 'with wrong parameters'}); // Throws 'wrong parameters'
+}, 'wrong parameters');
+// Returns true
+
+check.throwsWith(() => {
+  testFunction({called: 'with wrong parameters'}); // Throws 'wrong parameters'
+}, /parameter$/);
+// Returns true
+```
+
+```javascript
 await check.rejects(async() => {
   await testFunction({called: 'with wrong parameters'}); // Throws on wrong parameters
 });
+// Returns true
+```
+
+```javascript
+await check.rejectsWith(async() => {
+  await testFunction({called: 'with wrong parameters'}); // Throws 'wrong parameters'
+}, 'wrong parameters');
+// Returns true
+
+await check.rejectsWith(async() => {
+  await testFunction({called: 'with wrong parameters'}); // Throws 'wrong parameters'
+}, /parameters$/);
 // Returns true
 ```
 
