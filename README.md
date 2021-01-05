@@ -1,13 +1,18 @@
-# check-types.js
+# check-types-2
 
-[![Build status](https://gitlab.com/philbooth/check-types.js/badges/master/pipeline.svg)](https://gitlab.com/philbooth/check-types.js/pipelines)
-[![Package status](https://img.shields.io/npm/v/check-types.svg)](https://www.npmjs.com/package/check-types)
-[![Downloads](https://img.shields.io/npm/dw/check-types.svg)](https://www.npmjs.com/package/check-types)
-[![License](https://img.shields.io/npm/l/check-types.svg)](https://opensource.org/licenses/MIT)
+[![Package status](https://img.shields.io/npm/v/check-types-2.svg)](https://www.npmjs.com/package/check-types-2)
+[![Downloads](https://img.shields.io/npm/dw/check-types-2.svg)](https://www.npmjs.com/package/check-types-2)
+[![License](https://img.shields.io/npm/l/check-types-2.svg)](https://opensource.org/licenses/MIT)
 
 A little JavaScript library
 for asserting types
 and values.
+
+## Reference
+
+This repository was forked from [check-types.js](https://gitlab.com/philbooth/check-types.js)
+after the original project was archived. Thanks a lot to [Phil Booth](https://gitlab.com/philbooth)
+for the original work!
 
 * [Why would I want that?](#why-would-i-want-that)
 * [How little is it?](#how-little-is-it)
@@ -53,7 +58,7 @@ swiftly becomes tiresome
 and adds complexity
 to your codebase.
 
-The purpose of check-types.js
+The purpose of check-types-2
 is to remove this burden
 from JavaScript application developers
 in an efficient and robust manner,
@@ -68,13 +73,13 @@ abstracted by a simple API.
 Via npm:
 
 ```
-npm i check-types --save
+npm i check-types-2 --save
 ```
 
 Or if you just want the git repo:
 
 ```
-git clone git@gitlab.com:philbooth/check-types.js.git
+git clone git@github.com:stheine/check-types-2.git
 ```
 
 If you're into
@@ -92,10 +97,10 @@ Browserify
 or another CommonJS-style
 environment,
 you can `require`
-check-types like so:
+check-types-2 like so:
 
 ```javascript
-var check = require('check-types');
+var check = require('check-types-2');
 ```
 
 It also the supports
@@ -103,7 +108,7 @@ the AMD-style format
 preferred by Require.js.
 
 If you are
-including check-types.js
+including check-types-2
 with an HTML `<script>` tag,
 or neither of the above environments
 are detected,
@@ -780,17 +785,7 @@ await check.rejectsWith(async() => {
 
 ## Are there TypeScript definitions?
 
-[Yes](https://www.npmjs.com/package/@types/check-types)!
-
-Thanks to [@idchlife](https://github.com/idchlife),
-type definitions [were added](https://github.com/DefinitelyTyped/DefinitelyTyped/commit/d19ddb855dea08105a3d7450a98696c7bcd62f60)
-to [DefinitelyTyped].
-You can add them to your project
-via npm:
-
-```
-npm i @types/check-types --save-dev
-```
+No
 
 ## Where can I use it?
 
@@ -1016,17 +1011,17 @@ Assuming that you already have Node.js and NPM set up,
 you just need to run `npm install` to
 install all of the dependencies as listed in `package.json`.
 
-The unit tests are in `test/check-types.js`.
+The unit tests are in `test/check-types-2`.
 You can run them with the command `npm test`.
 To run the tests in a web browser,
-open `test/check-types.html`.
+open `test/check-types-2.html`.
 
 ## What license is it released under?
 
 [MIT][license]
 
 [definitelytyped]: https://github.com/DefinitelyTyped/DefinitelyTyped
-[releases]: https://gitlab.com/philbooth/check-types.js/tags
+[releases]: https://github.com/stheine/check-types-2/tags
 [history11]: HISTORY.md#anchor-1100
 [history10]: HISTORY.md#anchor-1000
 [history9]: HISTORY.md#anchor-900
@@ -1044,6 +1039,6 @@ open `test/check-types.html`.
 [mocha]: http://mochajs.org/
 [chai]: http://chaijs.com/
 [uglifyjs]: https://github.com/mishoo/UglifyJS
-[please-release-me]: https://gitlab.com/philbooth/please-release-me
-[license]: https://gitlab.com/philbooth/check-types.js/blob/master/COPYING
+[please-release-me]: https://www.npmjs.com/package/please-release-me
+[license]: https://github.com/stheine/check-types-2/blob/master/COPYING
 
