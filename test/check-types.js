@@ -882,7 +882,7 @@
 
     test('like with null archetype returns false', function () {
       assert.isFalse(
-        check.like(null, { foo: '' })
+        check.like({ foo: '' }, null)
       );
     });
 
@@ -953,7 +953,7 @@
 
     test('identical with null archetype returns false', function () {
       assert.isFalse(
-        check.identical(null, { foo: '' })
+        check.identical({ foo: '' }, null)
       );
     });
 
