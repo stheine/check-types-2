@@ -874,6 +874,24 @@
       );
     });
 
+    test('like with null data returns false', function () {
+      assert.isFalse(
+        check.like(null, { foo: '' })
+      );
+    });
+
+    test('like with null archetype returns false', function () {
+      assert.isFalse(
+        check.like(null, { foo: '' })
+      );
+    });
+
+    test('like with null data and null archetype returns true', function () {
+      assert.isTrue(
+        check.like(null, null)
+      );
+    });
+
     test('identical function is defined', function () {
       assert.isFunction(check.identical);
     });
