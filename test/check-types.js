@@ -847,6 +847,24 @@
       );
     });
 
+    test('like with missing properties returns false', function () {
+      assert.isFalse(
+        check.like(
+          { foo: function () {}, bar: {} },
+          { foo: function () {}, bar: {}, baz: '' }
+        )
+      );
+    });
+
+    test('like with extra properties returns true', function () {
+      assert.isTrue(
+        check.like(
+          { foo: function () {}, bar: {}, baz: '' },
+          { foo: function () {}, bar: {} }
+        )
+      );
+    });
+
     test('like with different nested objects returns false', function () {
       assert.isFalse(
         check.like(
