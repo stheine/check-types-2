@@ -6,7 +6,8 @@
 
 A little JavaScript library
 for asserting types
-and values.
+and values,
+with zero dependencies.
 
 ## Reference
 
