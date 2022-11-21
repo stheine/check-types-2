@@ -45,8 +45,6 @@
         "minify": "uglifyjs ./src/check-types.js --compress --mangle --output ./src/check-types.min.js"
     },
     "files": [
-        "COPYING",
-        "HISTORY.md",
         "src"
     ]
 }
