@@ -448,6 +448,12 @@ These are implemented by
   if `thing` has all of the properties of `duck`,
   `false` otherwise.
 
+* `check.identical(thing, thang)`:
+  Deep equality checker.
+  Returns `true`
+  if `thing` has all of the same values as `thang`,
+  `false` otherwise.
+
 #### Array predicates
 
 * `check.array(thing)`:

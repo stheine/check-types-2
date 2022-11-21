@@ -49,6 +49,7 @@
     { n: 'nonEmptyObject', f: nonEmptyObject, s: 'be non-empty object' },
     { n: 'instanceStrict', f: instanceStrict, s: 'be instanceof {t}' },
     { n: 'thenable', f: thenable, s: 'be promise-like' },
+    { n: 'identical', f: identical, s: 'be identical to {e}' },
     { n: 'instance', f: instance, s: 'be {t}' },
     { n: 'like', f: like, s: 'be like {e}' },
     { n: 'array', f: array, s: 'be Array' },
@@ -394,7 +395,7 @@
    * Returns true if `data` is an empty object, false otherwise.
    */
   function emptyObject (data) {
-    return object(data) && !some(data, function () {
+    return object(data) && ! some(data, function () {
       return true;
     });
   }
@@ -465,18 +466,55 @@
    * Public function `like`.
    *
    * Tests whether `data` 'quacks like a duck'. Returns true if `data` has all
-   * of the properties of `archetype` (the 'duck'), false otherwise.
+   * of the properties of `archetype` (the 'duck'), false otherwise. Interrogates
+   * objects recursively, to arbitrary depth.
    */
   function like (data, archetype) {
     var name;
 
     for (name in archetype) {
       if (hasOwnProperty.call(archetype, name)) {
-        if (hasOwnProperty.call(data, name) === false || typeof data[name] !== typeof archetype[name]) {
+        if (! hasOwnProperty.call(data, name) || typeof data[name] !== typeof archetype[name]) {
           return false;
         }
 
-        if (object(data[name]) && like(data[name], archetype[name]) === false) {
+        if (object(data[name]) && ! like(data[name], archetype[name])) {
+          return false;
+        }
+      }
+    }
+
+    return true;
+  }
+
+  /**
+   * Public function `identical`.
+   *
+   * Tests whether `data` has all of the same properties and values as `archetype`.
+   * Interrogates objects recursively, to arbitrary depth.
+   */
+  function identical (data, archetype) {
+    var name;
+
+    for (name in archetype) {
+      if (hasOwnProperty.call(archetype, name)) {
+        if (! hasOwnProperty.call(data, name) || data[name] !== archetype[name]) {
+          return false;
+        }
+
+        if (object(data[name]) && ! identical(data[name], archetype[name])) {
+          return false;
+        }
+      }
+    }
+
+    for (name in data) {
+      if (hasOwnProperty.call(data, name)) {
+        if (! hasOwnProperty.call(archetype, name) || archetype[name] !== data[name]) {
+          return false;
+        }
+
+        if (object(archetype[name]) && ! identical(archetype[name], data[name])) {
           return false;
         }
       }
@@ -779,7 +817,7 @@
 
         if (isFunction(predicate)) {
           if (not.assigned(data)) {
-            result[key] = !!predicate.m;
+            result[key] = !! predicate.m;
           } else {
             result[key] = predicate(data[key]);
           }
@@ -825,7 +863,7 @@
       }
     }
 
-    return !result;
+    return ! result;
   }
 
   function testObject (data, result) {
@@ -845,7 +883,7 @@
       }
     }
 
-    return !result;
+    return ! result;
   }
 
   /**
@@ -941,7 +979,7 @@
   }
 
   function notImpl (value) {
-    return !value;
+    return ! value;
   }
 
   /**
@@ -970,7 +1008,7 @@
   }
 
   function maybeImpl (value) {
-    if (assigned(value) === false) {
+    if (! assigned(value)) {
       return true;
     }
 
@@ -992,7 +1030,7 @@
         return true;
       }
 
-      if (!type(collection)) {
+      if (! type(collection)) {
         return false;
       }
 
@@ -1003,7 +1041,7 @@
         collection.forEach(function (item) {
           if (
             (target !== 'maybe' || assigned(item)) &&
-            !predicate.apply(null, [ item ].concat(args))
+            ! predicate.apply(null, [ item ].concat(args))
           ) {
             // TODO: Replace with for...of when ES6 is required.
             throw 0;
