@@ -1,5 +1,26 @@
 # History
 
+## 11.5.0
+
+### New features
+
+* predicates: implement identical (ae48dc13735e96c0ac9b33deb6dc1c7dea40bb13)
+
+### Bug fixes
+
+* tests: fix bad assertion in tests for like and identical (42dbed91e014082140286614ee76289dfaaf9340)
+* predicates: don't throw if args to identical are null (25dec51bd5a07f40774051e33bf4c720180fb20e)
+* predicates: don't throw if args to like are null (f5a2f741dd1e5c44b783d88df13d020418a8a828)
+
+### Other changes
+
+* ci: run tests in node 16 and 18 (ea17ee6ffe8c4323ef0575f2e838e6c51a1137f1)
+* package: drop license and history files from package (6ec4ed386d343a9230dfae21d35e1ebdbefcbf4e)
+* docs: add note about zero dependencies to readme (1abfc2b79aca014c3da6edf39c0d72fa7a07a011)
+* tests: extra test cases for like predicate (529033218856faefd974bd8458e3166078a7b854)
+* package: drop bower/component support (98149cb67f7fb2ba7055f7ec96c07e59e839937a)
+* package: update dev deps (507928c6932c2cddd1f90d557dea161572f64604)
+
 ## 11.4.0
 
 ### New features
