@@ -500,6 +500,10 @@
   function identical (data, archetype) {
     var name;
 
+    if (! assigned(data) || ! assigned(archetype)) {
+      return data === archetype;
+    }
+
     for (name in archetype) {
       if (hasOwnProperty.call(archetype, name)) {
         if (! hasOwnProperty.call(data, name) || data[name] !== archetype[name]) {

@@ -945,6 +945,24 @@
       );
     });
 
+    test('identical with null data returns false', function () {
+      assert.isFalse(
+        check.identical(null, { foo: '' })
+      );
+    });
+
+    test('identical with null archetype returns false', function () {
+      assert.isFalse(
+        check.identical(null, { foo: '' })
+      );
+    });
+
+    test('identical with null data and null archetype returns true', function () {
+      assert.isTrue(
+        check.identical(null, null)
+      );
+    });
+
     test('array function is defined', function () {
       assert.isFunction(check.array);
     });
