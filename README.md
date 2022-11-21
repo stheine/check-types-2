@@ -82,25 +82,16 @@ Or if you just want the git repo:
 git clone git@github.com:stheine/check-types-2.git
 ```
 
-If you're into
-other package managers,
-it is also available
-from Bower, Component and Jam.
-
 ## How do I use it?
 
 ### Loading the library
 
-If you are running in
-Node.js,
-Browserify
-or another CommonJS-style
-environment,
-you can `require`
-check-types-2 like so:
+If you are running in Node.js
+or a CommonJS environment,
+you can `require` check-types like so:
 
 ```javascript
-var check = require('check-types-2');
+const check = require('check-types-2');
 ```
 
 It also the supports
@@ -1041,4 +1032,3 @@ open `test/check-types-2.html`.
 [uglifyjs]: https://github.com/mishoo/UglifyJS
 [please-release-me]: https://www.npmjs.com/package/please-release-me
 [license]: https://github.com/stheine/check-types-2/blob/master/COPYING
-
