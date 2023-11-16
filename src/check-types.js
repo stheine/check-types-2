@@ -658,7 +658,7 @@
       return false;
     }
 
-    return !! data[key];
+    return data.hasOwnProperty(key);
   }
 
   /**

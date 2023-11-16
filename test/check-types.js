@@ -1194,6 +1194,26 @@
       assert.isTrue(check.containsKey({ first: 'foo', second: 'bar' }, 'second'));
     });
 
+    test('containsKey with matching value in object returns true even for 0 value', function () {
+      assert.isTrue(check.containsKey({ value: 0 }, 'value'));
+    });
+
+    test('containsKey with matching value in object returns true even for null value', function () {
+      assert.isTrue(check.containsKey({ value: null }, 'value'));
+    });
+
+    test('containsKey with matching value in object returns true even for undefined value', function () {
+      assert.isTrue(check.containsKey({ value: undefined }, 'value'));
+    });
+
+    test('containsKey with matching value in object returns true even for false value', function () {
+      assert.isTrue(check.containsKey({ value: false }, 'value'));
+    });
+
+    test('containsKey with matching value in object returns true even for NaN value', function () {
+      assert.isTrue(check.containsKey({ value: NaN }, 'value'));
+    });
+
     test('containsKey with non-matching value in object returns false', function () {
       assert.isFalse(check.containsKey({ baz: 'foo', qux: 'bar' }, 'foo'));
     });
