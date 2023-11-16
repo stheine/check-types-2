@@ -19,3 +19,7 @@ test:node16:
 test:node18:
   image: node:18
   <<: *npm_test
+
+test:node20:
+  image: node:20
+  <<: *npm_test
