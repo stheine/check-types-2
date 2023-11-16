@@ -918,6 +918,15 @@
       );
     });
 
+    test('identical with nested values returns true', function () {
+      assert.isTrue(
+        check.identical(
+          { foo: { bar: { baz: 'qux' } } },
+          { foo: { bar: { baz: 'qux' } } },
+        )
+      );
+    });
+
     test('identical with missing value returns false', function () {
       assert.isFalse(
         check.identical(
