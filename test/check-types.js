@@ -2615,8 +2615,12 @@
       }, /^fail$/));
     });
 
-    test('rejects with non function returns false', function () {
-      assert.isFalse(check.rejects({}));
+    test('rejects with non function returns false', function (done) {
+      check.rejects({}).then(function (result) {
+        assert.isFalse (result);
+
+        done();
+      });
     });
 
     test('rejects with rejecting function returns true', function (done) {
@@ -2641,12 +2645,20 @@
       });
     });
 
-    test('rejectsWith with non function returns false', function () {
-      assert.isFalse(check.rejectsWith({}, 'fail'));
+    test('rejectsWith with non function returns false', function (done) {
+      check.rejectsWith({}, 'fail').then(function (result) {
+        assert.isFalse(result);
+
+        done();
+      });
     });
 
-    test('rejectsWith with non string or pattern returns false', function () {
-      assert.isFalse(check.rejectsWith(function () {}, {}));
+    test('rejectsWith with non string or pattern returns false', function (done) {
+      check.rejectsWith(function () {}, {}).then(function (result) {
+        assert.isFalse(result);
+
+        done();
+      });
     });
 
     test('rejectsWith with non-rejecting function returns false', function (done) {

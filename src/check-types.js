@@ -1,9 +1,11 @@
 /*globals define, module, Symbol, Map, Set */
 /*jshint -W056 */
+/*jshint esversion: 8 */
 
 (function (globals) {
   'use strict';
 
+  var AsyncFunction = (async () => {}).constructor;
   var messages, predicates, functions, assert, not, maybe, collections,
      hasOwnProperty, toString, keys, slice, isArray, neginf, posinf,
      haveSymbols, haveMaps, haveSets;
@@ -62,8 +64,8 @@
     { n: 'hasLength', f: hasLength, s: 'have length {e}' },
     { n: 'throws', f: throws, s: 'throw' },
     { n: 'throwsWith', f: throwsWith, s: 'throw with {e}' },
-    { n: 'rejects', f: rejects, s: 'rejects' },
-    { n: 'rejectsWith', f: rejectsWith, s: 'rejects with {e}' },
+    { n: 'rejects', f: rejects, s: 'reject' },
+    { n: 'rejectsWith', f: rejectsWith, s: 'reject with {e}' },
   ].map(function (data) {
     var n = data.n;
     messages[n] = 'assert failed: expected {a} to ' + data.s;
@@ -753,16 +755,18 @@
    *
    * Returns true if `data` is an async function / function returning a Promise that is rejecting, false otherwise.
    */
-  function rejects (data) {
+  async function rejects (data) {
     if (! isFunction(data)) {
       return false;
     }
 
-    return new Promise (function (resolve) {
-      data()
-        .then (function () { resolve (false); })
-        .catch (function () { resolve (true); });
-    });
+    try {
+      await data();
+
+      return false;
+    } catch (ignore) {
+      return true;
+    }
   }
 
   /**
@@ -770,7 +774,7 @@
    *
    * Returns true if `data` is an async function / function returning a Promise that is rejecting with a specific message, false otherwise.
    */
-  function rejectsWith (data, message) {
+  async function rejectsWith (data, message) {
     if (! isFunction(data)) {
       return false;
     }
@@ -779,20 +783,20 @@
       return false;
     }
 
-    return new Promise (function (resolve) {
-      data()
-        .then (function () { resolve (false); })
-        .catch (function (error) {
-          if (string (message) && message === error.message) {
-            resolve (true);
-          }
-          if (instanceStrict (message, RegExp) && message.test (error.message)) {
-            resolve (true);
-          }
+    try {
+      await data();
 
-          resolve (false);
-        });
-    });
+      return false;
+    } catch (error) {
+      if (string (message) && message === error.message) {
+         return true;
+      }
+      if (instanceStrict (message, RegExp) && message.test (error.message)) {
+        return true;
+      }
+
+      return false;
+    }
   }
 
   /**
@@ -932,32 +936,63 @@
    * Throws if `predicate` returns false.
    */
   function assertModifier (predicate, defaultMessage) {
-    return function () {
-      var args = arguments;
-      var argCount = predicate.l || predicate.length;
-      var message = args[argCount];
-      var ErrorType = args[argCount + 1];
+    if(predicate instanceof AsyncFunction) {
+      return async function assertModifierAsyncFunc() {
+        var args = arguments;
+        var argCount = predicate.l || predicate.length;
+        var message = args[argCount];
+        var ErrorType = args[argCount + 1];
 
-      assertImpl(
-        predicate.apply(null, args),
-        nonEmptyString(message) ? message : defaultMessage
-          .replace('{a}', messageFormatter(args[0]))
-          .replace('{e}', messageFormatter(args[1]))
-          .replace('{e2}', messageFormatter(args[2]))
-          .replace('{t}', function () {
-            var arg = args[1];
+        const value = await predicate.apply(null, args);
 
-            if (arg && arg.name) {
-              return arg.name;
-            }
+        assertImpl(
+          value,
+          nonEmptyString(message) ? message : defaultMessage
+            .replace('{a}', messageFormatter(args[0]))
+            .replace('{e}', messageFormatter(args[1]))
+            .replace('{e2}', messageFormatter(args[2]))
+            .replace('{t}', function () {
+              var arg = args[1];
 
-            return arg;
-          }),
-        isFunction(ErrorType) ? ErrorType : TypeError
-      );
+              if (arg && arg.name) {
+                return arg.name;
+              }
 
-      return args[0];
-    };
+              return arg;
+            }),
+          isFunction(ErrorType) ? ErrorType : TypeError
+        );
+
+        return args[0];
+      };
+    } else {
+      return function  assertModifierSyncFunc() {
+        var args = arguments;
+        var argCount = predicate.l || predicate.length;
+        var message = args[argCount];
+        var ErrorType = args[argCount + 1];
+
+        assertImpl(
+          predicate.apply(null, args),
+          nonEmptyString(message) ? message : defaultMessage
+            .replace('{a}', messageFormatter(args[0]))
+            .replace('{e}', messageFormatter(args[1]))
+            .replace('{e2}', messageFormatter(args[2]))
+            .replace('{t}', function () {
+              var arg = args[1];
+
+              if (arg && arg.name) {
+                return arg.name;
+              }
+
+              return arg;
+            }),
+          isFunction(ErrorType) ? ErrorType : TypeError
+        );
+
+        return args[0];
+      };
+    }
   }
 
   function messageFormatter (arg) {
@@ -987,9 +1022,18 @@
    * Negates `predicate`.
    */
   function notModifier (predicate) {
-    var modifiedPredicate = function () {
-      return notImpl(predicate.apply(null, arguments));
-    };
+    var modifiedPredicate;
+
+    if(predicate instanceof AsyncFunction) {
+      modifiedPredicate = async function notModifierFuncAsync() {
+        const value = await predicate.apply(null, arguments);
+        return notImpl (value);
+      };
+    } else {
+      modifiedPredicate = function notModifierFunc() {
+        return notImpl(predicate.apply(null, arguments));
+      };
+    }
     modifiedPredicate.l = predicate.length;
     return modifiedPredicate;
   }

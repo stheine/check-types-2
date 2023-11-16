@@ -520,13 +520,13 @@ These are implemented by
   `false` otherwise.
   `message` can be a string or pattern.
 
-* `check.rejects(async() => await thing(), message)`:
+* `await check.rejects(async() => await thing(), message)`:
   Returns `true`
   if `thing` as an async function / function returning a Promise that is rejecting with a specific error,
   `false` otherwise.
   `message` can be a string or pattern.
 
-* `check.rejectsWith(async() => await thing(), message)`:
+* `await check.rejectsWith(async() => await thing(), message)`:
   Returns `true`
   if `thing` as an async function / function returning a Promise that is rejecting with a specific error,
   `false` otherwise.
