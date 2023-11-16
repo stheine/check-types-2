@@ -1,5 +1,21 @@
 # History
 
+## 11.6.0
+
+### New features
+
+* lib: make the rejects() and rejectsWith() checks work (fc7f8cc56c7c160f203eabe403e21c28064f0e25)
+
+### Bug fixes
+
+* errors: return true for containsKey even if value is nullish (111f37f751444a384a76c2d7b38054485c5aca44)
+* predicates: make `identical` work for nested objects (387dc471209090be800ef357d1a49c1191cf902c)
+
+### Other changes
+
+* ci: run tests in node 20 (677c154a5e4bf538a23fd43827f416873b082715)
+* 07c7acb276850aede2e9fce123936dde17d24290 doc (07c7acb276850aede2e9fce123936dde17d24290)
+
 ## 11.5.0
 
 ### New features
