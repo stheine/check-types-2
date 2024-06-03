@@ -1092,6 +1092,14 @@
       assert.isFalse(check.contains([ 'foo', 'bar' ], 'baz'));
     });
 
+    test('contains with undefined value in array returns true', function () {
+      assert.isTrue(check.contains([ 'foo', 'bar', undefined ], undefined));
+    });
+
+    test('contains with undefined value in array returns false', function () {
+      assert.isFalse(check.contains([ 'foo', 'bar' ], undefined));
+    });
+
     if (typeof Set !== 'undefined') {
       test('contains with matching value in set returns true', function () {
         assert.isTrue(check.contains(new Set([ 'foo', 'bar' ]), 'bar'));
@@ -1099,6 +1107,14 @@
 
       test('contains with non-matching value in set returns false', function () {
         assert.isFalse(check.contains(new Set([ 'foo', 'bar' ]), 'baz'));
+      });
+
+      test('contains with undefined value in set returns true', function () {
+        assert.isTrue(check.contains(new Set([ 'foo', 'bar', undefined ]), undefined));
+      });
+
+      test('contains with undefined value in set returns false', function () {
+        assert.isFalse(check.contains(new Set([ 'foo', 'bar' ]), undefined));
       });
     }
 
@@ -1110,6 +1126,14 @@
       test('contains with non-matching value in map returns false', function () {
         assert.isFalse(check.contains(new Map([['baz','foo'], ['qux','bar']]), 'baz'));
       });
+
+      test('contains with undefined value in map returns true', function () {
+        assert.isTrue(check.contains(new Map([['baz','foo'], ['qux',undefined]]), undefined));
+      });
+
+      test('contains with undefined value in map returns false', function () {
+        assert.isFalse(check.contains(new Map([['baz','foo'], ['qux','bar']]), undefined));
+      });
     }
 
     test('contains with matching value in string returns true', function () {
@@ -1120,6 +1144,10 @@
       assert.isFalse(check.contains('foo', 'of'));
     });
 
+    test('contains with undefined value in string returns false', function () {
+      assert.isFalse(check.contains('foo', undefined));
+    });
+
     test('contains with coercible object returns false', function () {
       assert.isFalse(
         check.contains({
@@ -1127,6 +1155,16 @@
             return 'foo';
           }
         }, 'oo')
+      );
+    });
+
+    test('contains with undefined value in coercible object returns false', function () {
+      assert.isFalse(
+        check.contains({
+          toString: function () {
+            return 'foo';
+          }
+        }, undefined)
       );
     });
 

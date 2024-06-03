@@ -618,7 +618,7 @@
       do {
         iteration = iterator.next();
 
-        if (iteration.value === value) {
+        if (iteration.value === value && ! iteration.done) {
           return true;
         }
       } while (! iteration.done);
