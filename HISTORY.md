@@ -1,5 +1,15 @@
 # History
 
+## 11.6.1
+
+### Bug fixes
+
+* errors: return false for undefined value in contains for array or map that do not contain an undefined entry (5b9032979f1c29bda7d75a32f0f47eb350207396)
+
+### Other changes
+
+* package: update dev deps (b62f0a65b77f61f2e72f5fcc7080942536377f16)
+
 ## 11.6.0
 
 ### New features
