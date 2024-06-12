@@ -1096,7 +1096,7 @@
       assert.isTrue(check.contains([ 'foo', 'bar', undefined ], undefined));
     });
 
-    test('contains with undefined value in array returns false', function () {
+    test('contains with undefined value not in array returns false', function () {
       assert.isFalse(check.contains([ 'foo', 'bar' ], undefined));
     });
 
@@ -1113,7 +1113,7 @@
         assert.isTrue(check.contains(new Set([ 'foo', 'bar', undefined ]), undefined));
       });
 
-      test('contains with undefined value in set returns false', function () {
+      test('contains with undefined value not in set returns false', function () {
         assert.isFalse(check.contains(new Set([ 'foo', 'bar' ]), undefined));
       });
     }
@@ -1131,7 +1131,7 @@
         assert.isTrue(check.contains(new Map([['baz','foo'], ['qux',undefined]]), undefined));
       });
 
-      test('contains with undefined value in map returns false', function () {
+      test('contains with undefined value not in map returns false', function () {
         assert.isFalse(check.contains(new Map([['baz','foo'], ['qux','bar']]), undefined));
       });
     }
@@ -1192,6 +1192,22 @@
       assert.isFalse(check.in('baz', [ 'foo', 'bar' ]));
     });
 
+    test('in with undefined value in array returns true', function () {
+      assert.isTrue(check.in(undefined, [ 'foo', 'bar', undefined ]));
+    });
+
+    test('in with undefined value not in array returns false', function () {
+      assert.isFalse(check.in(undefined, [ 'foo', 'bar' ]));
+    });
+
+    test('maybe.in with undefined value not in array returns true', function () {
+      assert.isTrue(check.maybe.in(undefined, [ 'foo', 'bar' ]));
+    });
+
+    test('maybe.in with value not in array returns false', function () {
+      assert.isFalse(check.maybe.in('baz', [ 'foo', 'bar' ]));
+    });
+
     if (typeof Set !== 'undefined') {
       test('in with matching value in set returns true', function () {
         assert.isTrue(check.in('bar', new Set([ 'foo', 'bar' ])));
@@ -1199,6 +1215,14 @@
 
       test('in with non-matching value in set returns false', function () {
         assert.isFalse(check.in('baz', new Set([ 'foo', 'bar' ])));
+      });
+
+      test('maybe.in with undefined value not in set returns true', function () {
+        assert.isTrue(check.maybe.in(undefined, new Set([ 'foo', 'bar' ])));
+      });
+
+      test('maybe.in with value not in set returns false', function () {
+        assert.isFalse(check.maybe.in('baz', new Set([ 'foo', 'bar' ])));
       });
     }
 
@@ -1209,6 +1233,14 @@
 
       test('in with non-matching value in map returns false', function () {
         assert.isFalse(check.in('baz', new Map([['baz','foo'], ['qux','bar']])));
+      });
+
+      test('maybe.in with undefined value not in map returns true', function () {
+        assert.isTrue(check.maybe.in(undefined, new Map([['baz','foo'], ['foo','bar']])));
+      });
+
+      test('maybe.in with value not in map returns false', function () {
+        assert.isFalse(check.maybe.in('baz', new Map([['baz','foo'], ['foo','bar']])));
       });
     }
 
