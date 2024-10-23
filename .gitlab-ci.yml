@@ -23,3 +23,7 @@ test:node18:
 test:node20:
   image: node:20
   <<: *npm_test
+
+test:node22:
+  image: node:22
+  <<: *npm_test
