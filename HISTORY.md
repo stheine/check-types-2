@@ -1,5 +1,12 @@
 # History
 
+## 11.7.1
+
+### Other changes
+
+* 083f061aea70ee7dc3ee7b9d887195cd1009b35c Merge branch 'joachimhb-master' (083f061aea70ee7dc3ee7b9d887195cd1009b35c)
+* f9422df3664a51e0c894b8f263325fd3c49765e0 rejectsWith and throwsWith show error message in assert error (f9422df3664a51e0c894b8f263325fd3c49765e0)
+
 ## 11.7.0
 
 ### New features
