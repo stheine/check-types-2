@@ -2785,102 +2785,82 @@
       }, /^fail$/));
     });
 
-    test('rejects with non function returns false', function (done) {
-      check.rejects({}).then(function (result) {
-        assert.isFalse (result);
+    test('rejects with non function returns false', async function () {
+      const result = await check.rejects({});
 
-        done();
-      });
+      assert.isFalse (result);
     });
 
-    test('rejects with rejecting function returns true', function (done) {
-      check.rejects(function () {
+    test('rejects with rejecting function returns true', async function () {
+      const result = await check.rejects(function () {
         return Promise.reject();
-      }).then(function (result) {
-        assert.isTrue (result);
-
-        done();
       });
+
+      assert.isTrue (result);
     });
 
-    test('rejects with non-rejecting function returns false', function (done) {
-      check.rejects(function () {
+    test('rejects with non-rejecting function returns false', async function () {
+      const result = await check.rejects(function () {
         return new Promise (function (resolve) {
           resolve();
         });
-      }).then(function (result) {
-        assert.isFalse (result);
-
-        done();
       });
+
+      assert.isFalse (result);
     });
 
-    test('rejectsWith with non function returns false', function (done) {
-      check.rejectsWith({}, 'fail').then(function (result) {
-        assert.isFalse(result);
+    test('rejectsWith with non function returns false', async function () {
+      const result = await check.rejectsWith({}, 'fail');
 
-        done();
-      });
+      assert.isFalse(result);
     });
 
-    test('rejectsWith with non string or pattern returns false', function (done) {
-      check.rejectsWith(function () {}, {}).then(function (result) {
-        assert.isFalse(result);
+    test('rejectsWith with non string or pattern returns false', async function () {
+      const result = await check.rejectsWith(function () {}, {});
 
-        done();
-      });
+      assert.isFalse(result);
     });
 
-    test('rejectsWith with non-rejecting function returns false', function (done) {
-      check.rejectsWith(function () {
+    test('rejectsWith with non-rejecting function returns false', async function () {
+      const result = await check.rejectsWith(function () {
         return new Promise (function (resolve) {
           resolve();
         });
-      }, 'fail').then(function (result) {
-        assert.isFalse (result);
+      }, 'fail');
 
-        done();
-      });
+      assert.isFalse (result);
     });
 
-    test('rejectsWith with rejecting function matching string returns true', function (done) {
-      check.rejectsWith(function () {
+    test('rejectsWith with rejecting function matching string returns true', async function () {
+      const result = await check.rejectsWith(function () {
         return Promise.reject(new Error('fail'));
-      }, 'fail').then(function (result) {
-        assert.isTrue (result);
+      }, 'fail');
 
-        done();
-      });
+      assert.isTrue (result);
     });
 
-    test('rejectsWith with rejecting function not matching string returns false', function (done) {
-      check.rejectsWith(function () {
+    test('rejectsWith with rejecting function not matching string returns false', async function () {
+      const result = await check.rejectsWith(function () {
         return Promise.reject(new Error('other error'));
-      }, 'fail').then(function (result) {
-        assert.isFalse (result);
+      }, 'fail');
 
-        done();
-      });
+      assert.isFalse (result);
     });
 
-    test('rejectsWith with rejecting function matching pattern returns true', function (done) {
-      check.rejectsWith(function () {
+    test('rejectsWith with rejecting function matching pattern returns true', async function () {
+      const result = await check.rejectsWith(function () {
         return Promise.reject(new Error('fail'));
-      }, /^fail$/).then(function (result) {
-        assert.isTrue (result);
+      }, /^fail$/);
 
-        done();
-      });
+      assert.isTrue (result);
     });
 
-    test('rejectsWith with rejecting function not matching pattern returns false', function (done) {
-      check.rejectsWith(function () {
+    test('rejectsWith with rejecting function not matching pattern returns false', async function () {
+      const result = await check.rejectsWith(function () {
         return Promise.reject(new Error('other error'));
-      }, /^fail$/).then(function (result) {
-        assert.isFalse (result);
+      }, /^fail$/);
 
-        done();
-      });
+      assert.isFalse (result);
     });
   });
 }(typeof require === 'function' ? require : undefined));
