@@ -1,3 +1,4 @@
+
 /*globals require, chai */
 
 (function (require) {
@@ -1804,6 +1805,10 @@
       assert.isFunction(check.assert.true);
       assert.isFunction(check.assert.false);
       assert.isFunction(check.assert.equal);
+      assert.isFunction(check.assert.throws);
+      assert.isFunction(check.assert.rejects);
+      assert.isFunction(check.assert.throwsWith);
+      assert.isFunction(check.assert.rejectsWith);
     });
 
     test('assert modifier is not applied to batch operations', function () {
@@ -1970,8 +1975,8 @@
       assert.throws(function () { check.assert.date({}) }, 'assert failed: expected Object to be valid Date');
       assert.throws(function () { check.assert.function({}) }, 'assert failed: expected Object to be Function');
       assert.throws(function () { check.assert.throws(function () {}) }, 'assert failed: expected Function to throw');
-      assert.throws(function () { check.assert.throwsWith(function () {}, 'fail') }, 'assert failed: expected Function to throw with "fail"');
-      assert.throws(function () { check.assert.throwsWith(function () {}, /^fail$/) }, 'assert failed: expected Function to throw with /^fail$/');
+      assert.throws(function () { check.assert.throwsWith(function () {}, 'fail') }, 'expected function to throw with "fail" but got "Function is not throwing"');
+      assert.throws(function () { check.assert.throwsWith(function () {}, /^fail$/) }, 'expected function to throw with /^fail$/ but got "Function is not throwing"');
     });
 
 
@@ -2785,6 +2790,48 @@
       }, /^fail$/));
     });
 
+    test('assert throwsWith with no function provided', async function () {
+      try {
+        check.assert.throwsWith();
+      } catch(err) {
+        check.assert.equal(err.message, 'expected function to throw with undefined but got "input is not a Function"');
+      }
+    });
+
+    test('assert throwsWith with no function provided', async function () {
+      try {
+        check.assert.throwsWith(undefined, 'test');
+      } catch(err) {
+        check.assert.equal(err.message, 'expected function to throw with "test" but got "input is not a Function"');
+      }
+    });
+
+    test('assert throwsWith with no message provided', async function () {
+      try {
+        check.assert.throwsWith(function () {
+          throw new Error('other error');
+        });
+      } catch(err) {
+        check.assert.equal(err.message, 'expected function to throw with undefined but got "message is not String or RegExp"');
+      }
+    });
+
+    test('assert throwsWith with throwing function not matching string throws', async function () {
+      try {
+        check.assert.throwsWith(function () {
+          throw new Error('other error');
+        }, /fail/);
+      } catch(err) {
+        check.assert.equal(err.message, 'expected function to throw with /fail/ but got "other error"');
+      }
+    });
+
+    test('assert throwsWith with throwing function not throwing', async function () {
+      check.assert.throwsWith(function () {
+        throw new Error('fail');
+      }, /fail/);
+    });
+
     test('rejects with non function returns false', async function () {
       const result = await check.rejects({});
 
@@ -2861,6 +2908,48 @@
       }, /^fail$/);
 
       assert.isFalse (result);
+    });
+
+    test('assert rejectsWith with no function provided', async function () {
+      try {
+        await check.assert.rejectsWith();
+      } catch(err) {
+        check.assert.equal(err.message, 'expected function to reject with undefined but got "input is not a Function"');
+      }
+    });
+
+    test('assert rejectsWith with no function provided', async function () {
+      try {
+        await check.assert.rejectsWith(undefined, 'test');
+      } catch(err) {
+        check.assert.equal(err.message, 'expected function to reject with "test" but got "input is not a Function"');
+      }
+    });
+
+    test('assert rejectsWith with no message provided', async function () {
+      try {
+        await check.assert.rejectsWith(function () {
+          return Promise.reject(new Error('other error'));
+        });
+      } catch(err) {
+        check.assert.equal(err.message, 'expected function to reject with undefined but got "message is not String or RegExp"');
+      }
+    });
+
+    test('assert rejectsWith with rejecting function not matching string throws', async function () {
+      try {
+        await check.assert.rejectsWith(function () {
+          return Promise.reject(new Error('other error'));
+        }, /fail/);
+      } catch(err) {
+        check.assert.equal(err.message, 'expected function to reject with /fail/ but got "other error"');
+      }
+    });
+
+    test('assert rejectsWith with rejecting function matching string not throwing', async function () {
+      await check.assert.rejectsWith(function () {
+        return Promise.reject(new Error('fail'));
+      }, /fail/);
     });
   });
 }(typeof require === 'function' ? require : undefined));

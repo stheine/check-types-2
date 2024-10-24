@@ -62,6 +62,7 @@
     { n: 'date', f: date, s: 'be valid Date' },
     { n: 'function', f: isFunction, s: 'be Function' },
     { n: 'hasLength', f: hasLength, s: 'have length {e}' },
+
     { n: 'throws', f: throws, s: 'throw' },
     { n: 'throwsWith', f: throwsWith, s: 'throw with {e}' },
     { n: 'rejects', f: rejects, s: 'reject' },
@@ -69,6 +70,14 @@
   ].map(function (data) {
     var n = data.n;
     messages[n] = 'assert failed: expected {a} to ' + data.s;
+
+    if([
+      'throwsWith',
+      'rejectsWith'
+    ].includes(n)) {
+      messages[n] = 'expected function to ' + data.s + ' but got {a}';
+    }
+
     predicates[n] = data.f;
   });
 
@@ -708,29 +717,44 @@
    *
    * Returns true if `data` is a function that throws with a specific error, false otherwise.
    */
-  function throwsWith (data, message) {
+  function throwsWith (data, message, detailed) {
+    let value = false;
+    let returnMessage = null;
+
     if (! isFunction(data)) {
-      return false;
-    }
+      // value = false;
+      returnMessage = 'input is not a Function';
+    } else if (! string(message) && ! instanceStrict (message, RegExp)) {
+      // value = false;
+      returnMessage = 'message is not String or RegExp';
+    } else {
+      try {
+        data();
 
-    if (! string(message) && ! instanceStrict (message, RegExp)) {
-      return false;
-    }
+        // value = false;
+        returnMessage = 'Function is not throwing';
+      } catch (error) {
+        if (string (message) && message === error.message) {
+          value = true;
+          returnMessage = 'message is equal';
+        }
+        if (instanceStrict (message, RegExp) && message.test (error.message)) {
+          value = true;
+          returnMessage = 'message is matching';
+        }
 
-    try {
-      data();
-    } catch (error) {
-      if (string (message) && message === error.message) {
-        return true;
+        returnMessage = error.message;
       }
-      if (instanceStrict (message, RegExp) && message.test (error.message)) {
-        return true;
-      }
-
-      return false;
     }
 
-    return false;
+    if(detailed) {
+      return {
+        value,
+        message: returnMessage,
+      };
+    }
+
+    return value;
   }
 
   /**
@@ -757,29 +781,44 @@
    *
    * Returns true if `data` is an async function / function returning a Promise that is rejecting with a specific message, false otherwise.
    */
-  async function rejectsWith (data, message) {
+  async function rejectsWith (data, message, detailed) {
+    let value = false;
+    let returnMessage = null;
+
     if (! isFunction(data)) {
-      return false;
-    }
+      // value = false;
+      returnMessage = 'input is not a Function';
+    } else if (! string(message) && ! instanceStrict (message, RegExp)) {
+      // value = false;
+      returnMessage = 'message is not String or RegExp';
+    } else {
+      try {
+        await data();
 
-    if (! string(message) && ! instanceStrict (message, RegExp)) {
-      return false;
-    }
+        // value = false;
+        returnMessage = 'Function is not rejecting';
+      } catch (error) {
+        if (string (message) && message === error.message) {
+          value = true;
+          returnMessage = 'message is equal';
+        }
+        if (instanceStrict (message, RegExp) && message.test (error.message)) {
+          value = true;
+          returnMessage = 'message is matching';
+        }
 
-    try {
-      await data();
-
-      return false;
-    } catch (error) {
-      if (string (message) && message === error.message) {
-         return true;
+        returnMessage = error.message;
       }
-      if (instanceStrict (message, RegExp) && message.test (error.message)) {
-        return true;
-      }
-
-      return false;
     }
+
+    if(detailed) {
+      return {
+        value,
+        message: returnMessage,
+      };
+    }
+
+    return value;
   }
 
   /**
@@ -926,12 +965,31 @@
         var message = args[argCount];
         var ErrorType = args[argCount + 1];
 
-        const value = await predicate.apply(null, args);
+        let value = null;
+        let value2 = null;
+
+        if(rejectsWith === predicate) {
+          const finalArgs = [...args];
+
+          while(finalArgs.length < 2) {
+            finalArgs.push(undefined);
+          }
+
+          finalArgs.push(true);
+
+          const res = await predicate.apply(null, finalArgs);
+
+          value = res.value;
+          value2 = res.message;
+        } else {
+          value = await predicate.apply(null, args);
+        }
+
 
         assertImpl(
           value,
           nonEmptyString(message) ? message : defaultMessage
-            .replace('{a}', messageFormatter(args[0]))
+            .replace('{a}', messageFormatter(value2 || args[0]))
             .replace('{e}', messageFormatter(args[1]))
             .replace('{e2}', messageFormatter(args[2]))
             .replace('{t}', function () {
@@ -955,10 +1013,30 @@
         var message = args[argCount];
         var ErrorType = args[argCount + 1];
 
+        let value = null;
+        let value2 = null;
+
+        if(throwsWith === predicate) {
+          const finalArgs = [...args];
+
+          while(finalArgs.length < 2) {
+            finalArgs.push(undefined);
+          }
+
+          finalArgs.push(true);
+
+          const res = predicate.apply(null, finalArgs);
+
+          value = res.value;
+          value2 = res.message;
+        } else {
+          value = predicate.apply(null, args);
+        }
+
         assertImpl(
-          predicate.apply(null, args),
+          value,
           nonEmptyString(message) ? message : defaultMessage
-            .replace('{a}', messageFormatter(args[0]))
+            .replace('{a}', messageFormatter(value2 || args[0]))
             .replace('{e}', messageFormatter(args[1]))
             .replace('{e2}', messageFormatter(args[2]))
             .replace('{t}', function () {
@@ -996,6 +1074,7 @@
     if (value) {
       return value;
     }
+
     throw new (ErrorType || Error)(message || 'assert failed');
   }
 
