@@ -496,49 +496,34 @@
   /**
    * Public function `identical`.
    *
-   * Tests whether `data` has all of the same properties and values as `archetype`.
-   * Interrogates objects recursively, to arbitrary depth.
+   * Returns true if `lhs` and `rhs` are equal, by comparing the JSON.stringify() output.
+   * This compares most types of objects for all levels of data.
+   * Returns false otherwise.
    */
-  function identical (data, archetype) {
+  function identical (lhs, rhs) {
     var name;
 
-    if (! assigned(data) || ! assigned(archetype)) {
-      return data === archetype;
-    }
-
-    for (name in archetype) {
-      if (hasOwnProperty.call(archetype, name)) {
-        if (! hasOwnProperty.call(data, name)) {
-          return false;
-        }
-
-        if (object(data[name])) {
-          if (! identical(data[name], archetype[name])) {
-            return false;
-          }
-        } else if (data[name] !== archetype[name]) {
-          return false;
-        }
+    const replacer = function(key, value) {
+      if(value instanceof Map) {
+        return {
+          dataType: 'Map',
+          value: [...value],
+        };
+      } else if(typeof value === 'symbol') {
+        return {
+          dataType: 'Symbol',
+          value: value.toString(),
+        };
+      } else {
+        return value;
       }
     }
 
-    for (name in data) {
-      if (hasOwnProperty.call(data, name)) {
-        if (! hasOwnProperty.call(archetype, name)) {
-          return false;
-        }
-
-        if (object(archetype[name])) {
-          if (! identical(archetype[name], data[name])) {
-            return false;
-          }
-        } else if (archetype[name] !== data[name]) {
-          return false;
-        }
-      }
+    if (JSON.stringify(lhs, replacer) === JSON.stringify(rhs, replacer)) {
+      return true;
     }
 
-    return true;
+    return false;
   }
 
   /**

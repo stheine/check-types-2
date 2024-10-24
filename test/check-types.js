@@ -896,6 +896,38 @@
       assert.isFunction(check.identical);
     });
 
+    test('identical with different values returns false', function () {
+      assert.isFalse(check.identical(1, 0));
+    });
+
+    test('identical with same values returns true', function () {
+      assert.isTrue(check.identical(1, 1));
+    });
+
+    test('identical with coercible values returns false', function () {
+      assert.isFalse(check.identical(1, '1'));
+    });
+
+    test('identical with null values returns true', function () {
+      assert.isTrue(check.identical(null, null));
+    });
+
+    test('identical with undefioned values returns true', function () {
+      assert.isTrue(check.identical(undefined, undefined));
+    });
+
+    test('identical with different nil values returns false', function () {
+      assert.isFalse(check.identical(null, undefined));
+    });
+
+    test('identical with null and zero values returns false', function () {
+      assert.isFalse(check.identical(null, 0));
+    });
+
+    test('identical with null and blank string values returns false', function () {
+      assert.isFalse(check.identical(null, ''));
+    });
+
     test('identical with two empty object arguments returns true', function () {
       assert.isTrue(check.identical({}, {}));
     });
@@ -970,6 +1002,74 @@
       assert.isTrue(
         check.identical(null, null)
       );
+    });
+
+    test('identical with different string values returns false', function () {
+      assert.isFalse(check.identical('1', '0'));
+    });
+
+    test('identical with same string values returns true', function () {
+      assert.isTrue(check.identical('1', '1'));
+    });
+
+    test('identical with different boolean values returns false', function () {
+      assert.isFalse(check.identical(true, false));
+    });
+
+    test('identical with same boolean values returns true', function () {
+      assert.isTrue(check.identical(true, true));
+    });
+
+    test('identical with different array values returns false', function () {
+      assert.isFalse(check.identical([1, 0], [0, 0]));
+    });
+
+    test('identical with same array values returns true', function () {
+      assert.isTrue(check.identical([1, 0], [1, 0]));
+    });
+
+    test('identical with different multi-level-array values returns false', function () {
+      assert.isFalse(check.identical([1, ['a', 'b', [3]]], [1, ['a', 'b', [-3]]]));
+    });
+
+    test('identical with same multi-level-array values returns true', function () {
+      assert.isTrue(check.identical([1, ['a', 'b', [3]]], [1, ['a', 'b', [3]]]));
+    });
+
+    test('identical with different map returns false', function () {
+      assert.isFalse(check.identical(new Map([['a', 1], ['b', 2]]), new Map([['a', 1], ['c', 3]])));
+    });
+
+    test('identical with same map returns true', function () {
+      assert.isTrue(check.identical(new Map([['a', 1], ['b', 2]]), new Map([['a', 1], ['b', 2]])));
+    });
+
+    test('identical with different object values returns false', function () {
+      assert.isFalse(check.identical({a: 1, b: 2}, {a: 1, c: 3}));
+    });
+
+    test('identical with same object values returns true', function () {
+      assert.isTrue(check.identical({a: 1, b: 2}, {a: 1, b: 2}));
+    });
+
+    test('identical with same object values returns false, if the order differs', function () {
+      assert.isFalse(check.identical({a: 1, b: 2}, {b: 2, a: 1}));
+    });
+
+    test('identical with different multi-level-object values returns false', function () {
+      assert.isFalse(check.identical({a: 1, b: 2, c: {c1: 'a', c2: [22]}}, {a: 1, b: 2, c: {c1: 'a', c2: [-22]}}));
+    });
+
+    test('identical with same multi-level-object values returns true', function () {
+      assert.isTrue(check.identical({a: 1, b: 2, c: {c1: 'a', c2: [22]}}, {a: 1, b: 2, c: {c1: 'a', c2: [22]}}));
+    });
+
+    test('identical with different symbol returns false', function () {
+      assert.isFalse(check.identical(Symbol('a'), Symbol('b')));
+    });
+
+    test('identical with same symbol returns true', function () {
+      assert.isTrue(check.identical(Symbol('a'), Symbol('a')));
     });
 
     test('array function is defined', function () {
