@@ -501,8 +501,6 @@
    * Returns false otherwise.
    */
   function identical (lhs, rhs) {
-    var name;
-
     const replacer = function(key, value) {
       if(value instanceof Map) {
         return {
@@ -517,7 +515,7 @@
       } else {
         return value;
       }
-    }
+    };
 
     if (JSON.stringify(lhs, replacer) === JSON.stringify(rhs, replacer)) {
       return true;
