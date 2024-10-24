@@ -1,5 +1,22 @@
 # History
 
+## 11.7.0
+
+### New features
+
+* lib: extend identical() to work better for multi-level objects and additional data types (6061c6d8e05b914b534bd7e9ddbd240e60a887a9)
+
+### Refactorings
+
+* code: fix linting errors (5a3500eb8b5f7bb0fd88e1df5f092398a13be385)
+* tests: change the callback and done() code into real async/await (e0b86b578c4625022f8286e77043d3f09020ee5c)
+
+### Other changes
+
+* ci: run tests in node 22 (1b2de1969797e03b1f02b8263e15f1beb2e010e2)
+* tests: extend tests for maybe.in (189f8d7b52d4729137f341d0f94b1eb292d6a828)
+* config: extend .gitignore (fcdf6c7414028e538bb4fa97e964e77bd79898ec)
+
 ## 11.6.1
 
 ### Bug fixes
