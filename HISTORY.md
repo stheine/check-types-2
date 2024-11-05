@@ -1,5 +1,11 @@
 # History
 
+## 11.8.0
+
+### New features
+
+* lib: in the error message print the content instead of  or  (e5121812ed353a416a4e9aac4fe28d5595290f3b)
+
 ## 11.7.1
 
 ### Other changes
