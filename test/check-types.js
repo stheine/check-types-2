@@ -1073,6 +1073,14 @@
       assert.isTrue(check.identical(Symbol('a'), Symbol('a')));
     });
 
+    test('identical with different date returns false', function () {
+      assert.isFalse(check.identical(new Date('2024-11-01T00:00:01Z'), new Date('2024-11-02T00:00:01Z')));
+    });
+
+    test('identical with same date returns true', function () {
+      assert.isTrue(check.identical(new Date('2024-11-01T00:00:01Z'), new Date('2024-11-01T00:00:01Z')));
+    });
+
     test('array function is defined', function () {
       assert.isFunction(check.array);
     });

@@ -1063,7 +1063,11 @@
       }
 
       if (array(arg) || object(arg)) {
-        return '\n' + JSON.stringify(arg, null, 2) + '\n';
+        try {
+          return '\n' + JSON.stringify(arg, null, 2) + '\n';
+        } catch(err) {
+          return arg;
+        }
       }
 
       if (arg && arg !== true && arg.constructor && ! instanceStrict(arg, RegExp) && typeof arg !== 'number') {
