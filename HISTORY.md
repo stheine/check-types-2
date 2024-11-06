@@ -1,5 +1,11 @@
 # History
 
+## 11.8.1
+
+### Bug fixes
+
+* errors: prevent internal exception if failing to stringify array or object (fb766fc21784f70a3525de91e95493847a3c090b)
+
 ## 11.8.0
 
 ### New features
